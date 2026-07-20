@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brands Revenue Loop — Console</title>
+<style>
+  :root{
+    --ink:#0c1117; --panel:#121a24; --panel2:#0f1620; --line:#233042;
+    --text:#d7dee8; --dim:#8fa0b4; --faint:#5c6b7e;
+    --accent:#e08a4c; --accent2:#e6b450;
+    --live:#4cc38a; --warn:#e0b04c; --blocked:#d4756b; --planned:#7b8ea6;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --ink:#f4f6f9; --panel:#ffffff; --panel2:#eef1f5; --line:#d5dce4;
+    --text:#1a2430; --dim:#51617a; --faint:#8595a8;
+    --accent:#b85f24; --accent2:#96731a;
+    --live:#1d7a4f; --warn:#8a6a14; --blocked:#a33d33; --planned:#5c7089;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --ink:#f4f6f9; --panel:#ffffff; --panel2:#eef1f5; --line:#d5dce4;
+      --text:#1a2430; --dim:#51617a; --faint:#8595a8;
+      --accent:#b85f24; --accent2:#96731a;
+      --live:#1d7a4f; --warn:#8a6a14; --blocked:#a33d33; --planned:#5c7089;
+    }
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.5;
+       padding:0 16px 64px;max-width:1180px;margin:0 auto}
+  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;padding:26px 0 8px;
+         border-bottom:1px solid var(--line)}
+  h1{font-size:1.15rem;letter-spacing:.14em;font-weight:700}
+  h1 b{color:var(--accent)}
+  .meta{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-left:auto}
+  .meta button{background:none;border:1px solid var(--line);color:var(--dim);border-radius:4px;
+               font:inherit;padding:2px 8px;cursor:pointer;margin-left:8px}
+  h2{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);
+     margin:30px 0 10px;text-wrap:balance}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .card h3{font-size:.95rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .pill{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;padding:2px 8px;
+        border-radius:999px;border:1px solid currentColor}
+  .p-live{color:var(--live)} .p-blocked{color:var(--blocked)} .p-planned{color:var(--planned)}
+  .p-warn{color:var(--warn)}
+  .card p, .card li{font-size:.82rem;color:var(--dim)}
+  .card ul{padding-left:18px;margin-top:6px}
+  .kv{font-family:var(--mono);font-size:.76rem;margin-top:8px;color:var(--dim)}
+  .kv b{color:var(--text);font-weight:600}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+  .tile .v{font-family:var(--mono);font-size:1.25rem;font-variant-numeric:tabular-nums;
+           color:var(--text);margin-top:2px}
+  .tile .l{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .tile .s{font-size:.7rem;color:var(--dim);margin-top:4px}
+  .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+  table{border-collapse:collapse;width:100%;min-width:620px}
+  th,td{font-size:.76rem;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
+  th{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--faint);font-weight:500}
+  td{color:var(--dim)} td:first-child{color:var(--text)}
+  td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .rule{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--panel2)}
+  .rule:last-child{border-bottom:none}
+  .rule .rid{font-family:var(--mono);font-size:.7rem;color:var(--text);flex:0 0 52px}
+  .rule .bar{flex:0 0 90px;height:5px;background:var(--panel2);border-radius:3px;overflow:hidden}
+  .rule .bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+  .rule.retired .bar i{background:var(--faint)}
+  .rule .txt{font-size:.74rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;
+             white-space:nowrap;flex:1;min-width:0}
+  .rule.retired .rid,.rule.retired .txt{color:var(--faint);text-decoration:line-through}
+  .gate{border-left:none;border:1px solid var(--line);background:var(--panel);
+        border-radius:8px;padding:14px 16px;margin-top:12px}
+  .gate b{color:var(--warn)}
+  .empty{color:var(--faint);font-style:italic;font-size:.8rem}
+  .feed li{margin-bottom:8px;list-style:none}
+  .feed{padding:0}
+  .feed .d{font-family:var(--mono);font-size:.68rem;color:var(--accent2)}
+  .feed .t{font-size:.78rem;color:var(--dim)}
+  footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);
+         font-size:.72rem;color:var(--faint)}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <h1>BRANDS <b>REVENUE</b> LOOP</h1>
+  <span class="pill p-live" id="fleet-pill">FLEET</span>
+  <span class="meta"><span id="gen">loading…</span>
+    <button id="themeBtn" aria-label="toggle theme">◐</button></span>
+</header>
+
+<h2>Brands</h2>
+<div class="cards" id="brands"></div>
+
+<h2>ODP — Active Book (Meta Ads)</h2>
+<div class="tiles" id="tiles"></div>
+<div class="tscroll" style="margin-top:12px"><table id="engines">
+  <thead><tr><th>Engine</th><th>Objective</th><th class="num">IDR/day</th><th>Success axis</th></tr></thead>
+  <tbody></tbody></table></div>
+<div class="gate" id="gate"></div>
+
+<h2>Creative A/B — pre-sell message test</h2>
+<div class="cards" id="ab"></div>
+
+<h2>Rulebook (learned heuristics)</h2>
+<div class="card" id="rules"></div>
+
+<h2>Funnel factory & measurement</h2>
+<div class="tiles" id="factory"></div>
+
+<h2>Recent loop activity</h2>
+<div class="card"><ul class="feed" id="feed"></ul></div>
+
+<footer>
+  Channels: <b>Meta Ads — LIVE (sole focus)</b> · Google Ads — gated-planned.
+  Every value traces to a ledger row; “no data yet” means exactly that — nothing is fabricated.
+  Generated by <span style="font-family:var(--mono)">publish.py</span> ($0, stdlib) from the
+  brands-revenue-loop registry + member-loop ledgers.
+</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+document.getElementById("themeBtn").onclick=()=>{
+  const r=document.documentElement;
+  r.dataset.theme = r.dataset.theme==="light" ? "dark" : "light";
+};
+const IDR=n=>n==null?"—":new Intl.NumberFormat("id-ID").format(n);
+
+fetch("data.json").then(r=>r.json()).then(d=>{
+  $("#gen").textContent="updated "+new Date(d.generated_at).toLocaleString();
+  const reg=d.registry||{}, brands=(reg.brands||[]);
+  const live=brands.filter(b=>b.status==="LIVE").length;
+  $("#fleet-pill").textContent=live+"/"+brands.length+" LIVE";
+
+  // brand cards
+  $("#brands").innerHTML = brands.map(b=>{
+    const cls=b.status==="LIVE"?"p-live":b.status==="BLOCKED"?"p-blocked":"p-planned";
+    let body="";
+    if(b.status==="LIVE"){
+      body=`<p class="kv">loop <b>${esc(b.member_loop_task)}</b> · ${esc(b.cadence||"")}</p>
+            <p class="kv">autonomy <b>${esc((b.autonomy||"").split("(")[0].trim())}</b></p>
+            <p class="kv">envelope <b>IDR ${IDR(b.envelope_idr_day?.floor)}–${IDR(b.envelope_idr_day?.ceiling)}</b>/day</p>`;
+    }else if(b.blockers){
+      body="<ul>"+b.blockers.slice(0,3).map(x=>`<li>${esc(x)}</li>`).join("")+"</ul>";
+    }else{
+      body=`<p>${esc(b.note||"queued for onboarding")}</p>`;
+    }
+    return `<div class="card"><h3>${esc(b.display_name)}
+      <span class="pill ${cls}">${esc(b.status)}</span></h3>${body}</div>`;
+  }).join("");
+
+  const o=d.odp||{}, book=o.active_book||{};
+  const engines=book.live_campaigns||[];
+  const spend=engines.reduce((s,c)=>s+(c.budget_idr_day||0),0);
+  const rl=o.realized_roas_latest;
+  let roasTxt = "no data yet";
+  if(rl){
+    const v = rl.realized_roas ?? rl.roas;
+    roasTxt = (v==null)
+      ? "INCOMPUTABLE — awaiting first attributed order"
+      : Number(v).toFixed(2)+"×";
+  }
+
+  $("#tiles").innerHTML = `
+    <div class="tile"><div class="l">Book spend</div><div class="v">IDR ${IDR(spend)}</div>
+      <div class="s">/day · ${engines.length} live engines</div></div>
+    <div class="tile"><div class="l">Loop mode</div><div class="v" style="font-size:.9rem">${esc(o.loop_mode||"—")}</div>
+      <div class="s">gate: ${esc(o.roas_gate||"—")}</div></div>
+    <div class="tile"><div class="l">Realized ROAS</div><div class="v" style="font-size:.9rem">${esc(String(roasTxt)).slice(0,60)}</div>
+      <div class="s">settled orders ÷ attributed spend</div></div>
+    <div class="tile"><div class="l">Book as of</div><div class="v" style="font-size:.9rem">${esc(book.as_of||"—")}</div>
+      <div class="s">${esc((book.thesis||"").slice(0,90))}…</div></div>`;
+
+  $("#engines tbody").innerHTML = engines.length ? engines.map(c=>`
+    <tr><td>${esc(c.name)}</td><td>${esc(c.objective||"")}</td>
+    <td class="num">${IDR(c.budget_idr_day)}</td>
+    <td>${esc((c.success_axis||"").slice(0,110))}</td></tr>`).join("")
+    : `<tr><td colspan="4" class="empty">no live engines in the ledger</td></tr>`;
+
+  const ab=book.ab_test;
+  $("#ab").innerHTML = ab ? `
+    <div class="card"><h3>Arm A <span class="pill p-live">ATC-MAX</span></h3>
+      <p>${esc((ab.arm_A_ATC_max||"").slice(0,180))}</p></div>
+    <div class="card"><h3>Arm B <span class="pill p-live">PURCHASE-MAX</span></h3>
+      <p>${esc((ab.arm_B_purchase_max||"").slice(0,180))}</p></div>
+    <div class="card"><h3>Control + grading</h3>
+      <p>${esc((ab.control||"").slice(0,120))}</p>
+      <p style="margin-top:6px">${esc((ab.grade||"").slice(0,200))}</p></div>`
+    : `<div class="card"><p class="empty">no A/B recorded</p></div>`;
+
+  const gate=(reg.brands||[]).find(b=>b.brand_id==="ODP")?.decisive_human_gate;
+  $("#gate").innerHTML = gate
+    ? `<b>DECISIVE HUMAN GATE:</b> <span style="font-size:.82rem;color:var(--dim)">${esc(gate)}</span>`
+    : `<span class="empty">no open human gate recorded</span>`;
+
+  $("#rules").innerHTML = (o.rules||[]).map(r=>`
+    <div class="rule ${r.status==="retired"?"retired":""}">
+      <span class="rid">${esc(r.id||"").split("_")[0]}</span>
+      <span class="bar"><i style="width:${Math.round((r.confidence||0)*100)}%"></i></span>
+      <span class="txt" title="${esc(r.head)}">${esc(r.head)}</span>
+    </div>`).join("") || `<p class="empty">no rules yet</p>`;
+
+  const f=o.factory||{}, st=f.backlog_stages;
+  $("#factory").innerHTML = `
+    <div class="tile"><div class="l">Funnel backlog</div>
+      <div class="v">${st?Object.values(st).reduce((a,b)=>a+b,0):"—"}</div>
+      <div class="s">${st?esc(Object.entries(st).map(([k,v])=>k+" "+v).join(" · ")):"no data yet"}</div></div>
+    <div class="tile"><div class="l">Graveyard</div><div class="v">${f.graveyard_count??"—"}</div>
+      <div class="s">falsified funnels (cause recorded)</div></div>
+    <div class="tile"><div class="l">Calibration entries</div><div class="v">${o.calibration_entries??"—"}</div>
+      <div class="s">forecast-vs-actual (Brier ledger)</div></div>
+    <div class="tile"><div class="l">Spend snapshot</div>
+      <div class="v" style="font-size:.9rem">${d.odp.spend_snapshot?"present":"—"}</div>
+      <div class="s">feeds realized-ROAS join</div></div>`;
+
+  $("#feed").innerHTML = (o.recent_records||[]).map(r=>`
+    <li><span class="d">${esc(r.date)}</span> · <b style="font-size:.76rem">${esc(r.type||"")}</b><br>
+    <span class="t">${esc(r.note)}</span></li>`).join("")
+    || `<li class="empty">no ledger records</li>`;
+}).catch(e=>{ $("#gen").textContent="data.json failed to load"; });
+</script>
+</body>
+</html>

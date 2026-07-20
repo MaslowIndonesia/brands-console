@@ -1,0 +1,4 @@
+{"ts":"2026-07-20T07:33:25.013Z","cmd":"viewport","args":"1280x900","origin":"about:blank","durationMs":6,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-20T07:33:25.220Z","cmd":"goto","args":"http://localhost:8901","origin":"http://localhost:8901/","durationMs":121,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-20T07:33:25.726Z","cmd":"wait","args":"--networkidle","origin":"http://localhost:8901/","durationMs":439,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-20T07:33:26.120Z","cmd":"screenshot","args":"/tmp/brands-console.png","origin":"http://localhost:8901/","durationMs":311,"status":"ok","hasCookies":false,"mode":"launched"}

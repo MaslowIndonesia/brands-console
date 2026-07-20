@@ -1,0 +1,416 @@
+{
+ "generated_at": "2026-07-20T07:33:21+00:00",
+ "registry": {
+  "schema_version": 1,
+  "updated": "2026-07-20",
+  "umbrella": "brands-revenue-loop",
+  "console": {
+   "repo": "MaslowIndonesia/brands-console",
+   "url": "https://maslowindonesia.github.io/brands-console/",
+   "local": "~/Desktop/projects/brands-console",
+   "publisher": "publish.py (pure stdlib, $0) — run with --push at the end of every member-loop cycle"
+  },
+  "channels": {
+   "meta": {
+    "status": "LIVE",
+    "note": "sole focus — maximize as the compound engine (Hans 2026-07-20)"
+   },
+   "google_ads": {
+    "status": "GATED-PLANNED",
+    "note": "do not build until Hans green-lights; google-ads MCP already connected"
+   }
+  },
+  "brands": [
+   {
+    "brand_id": "ODP",
+    "display_name": "Our Daily Pets",
+    "status": "LIVE",
+    "site": "https://www.ourdailypets.com",
+    "member_loop_task": "odp-revenue-loop",
+    "cadence": "5x/day (40 6,10,13,16,20 WIB)",
+    "autonomy": "Mode C (MC-gated, Hans-authorized 2026-07-14; sha256 doctrine gate)",
+    "config": "~/.claude/skills/meta-ads-automate/config/ODP.json",
+    "ledger_namespace": "~/.claude/skills/meta-ads-automate/ledger/ODP/",
+    "state_dir": "~/.claude/skills/odp-revenue-loop/state/",
+    "meta": {
+     "ad_account_id": "1022075435980757",
+     "pixel_id": "450928861238073",
+     "page_id": "346965848506251",
+     "currency": "IDR"
+    },
+    "envelope_idr_day": {
+     "floor": 150000,
+     "ceiling": 500000
+    },
+    "decisive_human_gate": "payment-init defect (July: 63 carts -> 0 payment-inits; prime suspect PR#50) — one prod checkout walk + payment-path deploy (Hans)"
+   },
+   {
+    "brand_id": "RoyalMate",
+    "display_name": "Royal Mate",
+    "status": "BLOCKED",
+    "member_loop_task": null,
+    "config": "~/.claude/skills/meta-ads-automate/config/RoyalMate.json",
+    "ledger_namespace": "~/.claude/skills/meta-ads-automate/ledger/RoyalMate/",
+    "meta": {
+     "ad_account_id": "1684228383043013",
+     "business_id": "1300548432223319",
+     "currency": "IDR",
+     "has_payment_method": false
+    },
+    "blockers": [
+     "no payment method on ad account 1684228383043013 (hard blocker, Hans)",
+     "no Page / pixel / IG business id / Higgsfield identity",
+     "Day-0 MCP audit not yet run"
+    ],
+    "v1_objective": "whatsapp_channel_growth -> https://whatsapp.com/channel/0029Vb88FeJ3rZZUBF14fE3j"
+   },
+   {
+    "brand_id": "GentleHaus",
+    "display_name": "GentleHaus",
+    "status": "PLANNED",
+    "member_loop_task": null,
+    "config": null,
+    "note": "no assets yet — full onboarding protocol from step 0 when Hans initiates"
+   }
+  ]
+ },
+ "odp": {
+  "loop_mode": "AUTONOMOUS_ROAS (Mode C)",
+  "loop_mode_note": "2026-07-14 Hans AUTHORIZED in-session ('Land Mode C now'): loop is MODE C — MC-governed autonomous (doctrine rev3, doctrine.sha256 updated same change; STEP -1 integrity gate stays ON). The 10k MC gate (roas_target=2.0 floor, 8.0 stretch) authorizes money/site moves; safety machinery = min-evidence lock (≥3 attributed orders), INCOMPUTABLE-realized-ROAS→blind-spend ≤250k/day, floor controller, rat",
+  "roas_gate": "MC_GOVERNED (floor 2.0, stretch 8.0)",
+  "active_book": {
+   "as_of": "2026-07-16",
+   "thesis": "CORRECTED 2026-07-16 (R16): cheap LINK_CLICKS traffic = reach + affiliate signups ONLY; it does NOT cart (ATC 25/day->1/day when ATC-opt paused; funnel-routing falsified: 0 ATC on funnel URLs despite 13% CTR delivery). The cart engine = the ATC-opt set, restored per Hans + now carrying the creative-revision A/B (pre-sell copy: proof/risk-reversal vs guarantee/friction-kill). Judge ATC-opt on cost-per-ATC never CPM; creative gate UNLOCKED and in test.",
+   "envelope": "~225000 (inside 150k-500k)",
+   "live_campaigns": [
+    {
+     "id": "120215938611510694",
+     "name": "ODP - Website Traffic (LE)",
+     "objective": "LINK_CLICKS",
+     "budget_idr_day": 50000,
+     "dest": "ourdailypets.com",
+     "ads": "3 winner videos Traffic#8/#6/#3 -> web SHOP_NOW (120247629780580694/120247629810910694/120247629846840694); 11 legacy Order-Now ads PAUSED",
+     "success_axis": "link clicks / CTR up / CPC down / CPM down"
+    },
+    {
+     "id": "120246304820350694",
+     "name": "ODP - Website Traffic (LINK_CLICKS, ex-WA)",
+     "objective": "LINK_CLICKS",
+     "budget_idr_day": 50000,
+     "dest": "ourdailypets.com",
+     "ads": "ad 120246307381100694 repointed WA->shop creative 1014286557868772 SHOP_NOW",
+     "success_axis": "link clicks / CTR up / CPC down / CPM down"
+    },
+    {
+     "id": "120247620309870694",
+     "name": "ODP - Affiliate Recruitment",
+     "objective": "OUTCOME_TRAFFIC (LINK_CLICKS)",
+     "budget_idr_day": 50000,
+     "dest": "/affiliate-program",
+     "ads": "adset 120247620722180694 / ad 120247620722150694 (creative 3178222939047849)",
+     "success_axis": "new affiliates in admin tab + CompleteRegistration(affiliate_program) pixel events; NOT ROAS. Later: optimize toward the event (gated objective swap)"
+    },
+    {
+     "id": "120234996651390694",
+     "name": "ODP - Sales Funnel Traffic (LE)",
+     "objective": "LINK_CLICKS",
+     "budget_idr_day": 50000,
+     "dest": "FUNNEL-ROUTING A/B (CMO board 2026-07-12, verdict=FUNNEL/routing 80/20): generic-PDP winners = CONTROL; NEW funnel-arm ads route top-2 winners into the funnels -> #8 ad 120247655829580694 /bukti-nyata/colostrum + #6 ad 120247655829830694 /vitalitypackage/colostrum (SHOP_NOW). Both funnels use the fixed checkout.",
+     "ads": "control: 8 generic winners (#8/#6/#3/#5/#1/#9/#10/#11); funnel arm: 2 winner videos -> Bukti Nyata + Vitalitas; losers #2/#4/#12 PAUSED",
+     "success_axis": "ATC->Purchase (CAPI-read, post-fix sessions) funnel-arm vs control over 5-7d + AddToCart pixel + CPM/CPC/CTR. NEW creative gated behind this test failing. Hold objective + budget flat (Hans-gate)."
+    },
+    {
+     "id": "120247397355910694",
+     "name": "ODP - Cart Abandoner Retarget (ATC 180d)",
+     "objective": "LINK_CLICKS",
+     "budget_idr_day": 50000,
+     "dest": "ourdailypets.com (BuktiNyata proof pages)",
+     "ads": "adset 120247397367160694 Cart Abandoners ONLY (no expansion): Multi Collagen + Appetite Booster proof ads ACTIVE",
+     "success_axis": "cart->purchase-confirmation via cheap retarget: CPM down / CPC down / CTR up; watch DB purchases (Hans directive 2026-07-12) — KILLED 2026-07-16 (CPM 180k waste)"
+    }
+   ],
+   "ab_test": {
+    "where": "ATC-opt set 120247441023720694 (restored, 75k/day, Subscription ROAS campaign)",
+    "arm_A_ATC_max": "ad 120247771350970694 (UTM utm_content=revA_proof_atcmax) — proof+risk-reversal, CTA ADD_TO_CART -> /bukti-nyata/colostrum; untagged predecessor 120247771010850694 PAUSED",
+    "arm_B_purchase_max": "ad 120247771352640694 (UTM utm_content=revB_guarantee_purchasemax) — guarantee+friction-killer, CTA BUY_NOW -> /bukti-nyata/colostrum; untagged predecessor 120247771012110694 PAUSED",
+    "control": "6 existing generic-copy winner ads in same set",
+    "grade": "cost-per-ATC + ATC/day recovery to >=25 + per-ad utm_content in Order.attribution (aggregation=url is ORIGIN-ONLY — never grade by URL stats) + first organic Purchase (arm B KPI); z-test floors before kill/scale"
+   }
+  },
+  "realized_roas_latest": {
+   "ts": "2026-07-16T03:29:42.269Z",
+   "window_days": 7,
+   "realized_roas": null,
+   "computable": false,
+   "reason": "INCOMPUTABLE: 0 attributed settled conversions in window (blind-spend governs; scaling INHIBITED)",
+   "attributed_orders": 0,
+   "attributed_revenue_idr": 0,
+   "spend_idr": 1773350,
+   "by_campaign": {},
+   "variance_check": null,
+   "snapshot": {
+    "generated_at": "2026-07-16T03:29:38.185334+00:00",
+    "window_days": 7
+   }
+  },
+  "calibration_entries": 21,
+  "factory": {
+   "backlog_stages": {
+    "mined": 5,
+    "backtested": 3
+   },
+   "graveyard_count": 0
+  },
+  "revenue_goal": {
+   "version": "2026-07-19r2",
+   "directive": "Hans in-session 2026-07-19: 'Lets high aim for 1 Billion / Month' (raised from Nett 200jt/month same day). Loop = various sales funnels production live-ready, ever-increasing monthly revenue.",
+   "north_star": {
+    "nett_idr_per_month": 1000000000,
+    "nett_definition": "revenue - COGS (state/cogs_canon.json) - ad spend - shipping subsidy",
+    "implied_revenue_at_blended_margin": "~1.5-1.8B revenue/month at ~75% blended gross margin with disciplined ad spend (~55-60jt/day revenue run-rate)",
+    "honesty_note": "North star is ~380x the current 30d cart value (Rp3.1jt) - the loop reports ONLY against the current milestone, never claims progress toward the north star without DB-attributed paid orders."
+   },
+   "baseline_ground_truth_2026-07-19": {
+    "source": "live Order table, trailing 30d, read 2026-07-19",
+    "carts_30d": 123,
+    "cart_value_30d_idr": 3101220,
+    "paid_orders_30d": 2,
+    "paid_value_30d_idr": 260070,
+    "first_organic_paid_since_cliff": "cmrptwn8y0001l704v63f10tk (Wildan Akbar, PAID 2026-07-18 03:51Z, Rp86.070, raw food, paid 60s after checkout)",
+    "discrepancy_flag": "Hans states ATC value ~ Rp200jt/month. DB cart value is Rp3.1jt/30d. If the 200jt figure is from Meta pixel AddToCart value, it is inconsistent with the DB by ~65x and must be reconciled (pixel dedup/currency/test-events) before any spend decision uses it. The loop treats DB as ground truth (instrument canon) and the 200jt as the TARGET, not the current state."
+   },
+   "milestones": [
+    {
+     "m": 1,
+     "goal": "10 organic paid orders / month",
+     "lever": "cart->purchase conversion (ladder live, popup fixed, proof reordered) + ATC-opt engine",
+     "gate": "no ad-spend scaling until min-evidence (>=3 attributed paid orders)"
+    },
+    {
+     "m": 2,
+     "goal": "Nett 10jt / month",
+     "lever": "certify first ROAS>=2.0 funnel; promote to /promotions; scale winning adset within envelope"
+    },
+    {
+     "m": 3,
+     "goal": "Nett 50jt / month",
+     "lever": "3+ certified funnels live (high-margin SKUs first: Appetite 92% / Colostrum+ 90% / Colostrum 88%); ladder AOV lift measured; subscriber base compounding"
+    },
+    {
+     "m": 4,
+     "goal": "Nett 200jt / month",
+     "lever": "full factory cadence: continuous mine->MC->dark->A/B->certify->promote; dual-channel (DTC + marketplace) per Puainta playbook"
+    },
+    {
+     "m": 5,
+     "goal": "Nett 1B / month (NORTH STAR)",
+     "lever": "scaled ad book across certified funnel portfolio + subscription compounding + marketplace channel + reseller/community tier (the Puainta Rp5jt-basket class); requires Hans-approved envelope expansion at every scale step"
+    }
+   ],
+   "loop_behavior_update": "Every factory run reports progress vs the CURRENT milestone (not the north star), computes nett contribution per certified funnel using cogs_canon.json, and never claims milestone progress without DB-attributed paid orders."
+  },
+  "spend_snapshot": {
+   "generated_at": "2026-07-16T03:29:38.185334+00:00",
+   "window_days": 7,
+   "source": "meta MCP ads_get_ad_entities last_7d (Jul 9-15) pulled 2026-07-16 run",
+   "total_spend_idr": 1773350,
+   "campaigns": [
+    {
+     "id": "120246521280390694",
+     "name": "ODP – Bukti Nyata ROAS (PAUSED adset)",
+     "spend_idr": 474800
+    },
+    {
+     "id": "120246304820350694",
+     "name": "ODP – Website Traffic (LINK_CLICKS, ex-WA)",
+     "spend_idr": 347804
+    },
+    {
+     "id": "120215938611510694",
+     "name": "ODP - Website Traffic (LE)",
+     "spend_idr": 265044
+    },
+    {
+     "id": "120234996651390694",
+     "name": "ODP - Sales Funnel Traffic (LE)",
+     "spend_idr": 234725
+    },
+    {
+     "id": "120247620309870694",
+     "name": "ODP – Affiliate Recruitment",
+     "spend_idr": 226524
+    },
+    {
+     "id": "120246341303860694",
+     "name": "ODP – Subscription ROAS (PAUSED adset)",
+     "spend_idr": 171012
+    },
+    {
+     "id": "120247397355910694",
+     "name": "ODP — Cart Abandoner Retarget (PAUSED adset)",
+     "spend_idr": 53441
+    }
+   ]
+  },
+  "rules": [
+   {
+    "id": "R1_reactivate_tier1",
+    "confidence": 0.7,
+    "status": "active",
+    "head": "While ROAS gate is closed and envelope has room, reactivate lowest-CPM/CPC traffic engines (TikTok 120232267765710694, Affiliate 120235584621130694, Sales-Funnel 120234996651390694"
+   },
+   {
+    "id": "R2_keep_winners_drop_losers",
+    "confidence": 0.8,
+    "status": "active",
+    "head": "Favor Traffic #8 / #6 creative families"
+   },
+   {
+    "id": "R3_ramp_or_cut",
+    "confidence": 0.65,
+    "status": "active",
+    "head": "For a live ad set past the min-data guard: propose +20% budget if CPC <= 45 and CTR >= 10% on a fresh 3-day window (max 3 scale steps/7d); propose -20% or pause if CPC > 200 or CTR"
+   },
+   {
+    "id": "R4_saturation_refresh",
+    "confidence": 0.65,
+    "status": "active",
+    "head": "If frequency (7d) > 2.0 (Shopee Traffic/Conversions already ~2.3), propose audience expansion or creative refresh BEFORE any budget cut — fatigue is a creative/audience problem, no"
+   },
+   {
+    "id": "R5_fragmentation_consolidate",
+    "confidence": 0.6,
+    "status": "active",
+    "head": "If anomaly_signal reports auction overlap among the 7 channel-segmented ad sets, propose consolidation rather than further fragmentation."
+   },
+   {
+    "id": "R6_gate_flip_unlock",
+    "confidence": 0.9,
+    "status": "active",
+    "head": "STANDING P1: instrument Purchase/AddToCart/InitiateCheckout/ViewContent (value+currency=IDR+content_ids) on ourdailypets.com via Next.js+Midtrans webhook + stand up CAPI + verify d"
+   },
+   {
+    "id": "R7_envelope_guard",
+    "confidence": 0.85,
+    "status": "active",
+    "head": "Total proposed daily spend stays inside IDR 150k-500k (zero-sum reallocation until ROAS justifies expansion)"
+   },
+   {
+    "id": "R8_pattern_to_winner",
+    "confidence": 0.5,
+    "status": "candidate",
+    "head": "Did creatives generated from a mined Meta-Library pattern beat the incumbent CONTROL on the LEGAL metric (CTR/CPC, two-proportion significance test, Benjamini-Hochberg corrected, o"
+   },
+   {
+    "id": "R9_virality_calibration",
+    "confidence": 0.3,
+    "status": "candidate",
+    "head": "Does the Higgsfield virality_predictor score rank-correlate with realized CTR-vs-control (Spearman, out-of-sample, >=30 pairs)? virality_predictor is a NON-GATING triage filter and"
+   },
+   {
+    "id": "R10_commerce_preflight_gate",
+    "confidence": 0.95,
+    "status": "active",
+    "head": "GATE, runs before every cycle: Layer-3 commerce truth (order-health probe: carts->midtrans_token->paid + guest-checkout flag + Purchase dataset-vs-DB agreement) must be GREEN befor"
+   },
+   {
+    "id": "R11_proxy_vs_ground_truth_divergence",
+    "confidence": 0.9,
+    "status": "active",
+    "head": "When platform proxies (events, CTR, opportunity_score) and business ground truth (paid orders in the live DB) diverge, GROUND TRUTH WINS and the divergence direction IS the diagnos"
+   },
+   {
+    "id": "R12_correction_discipline",
+    "confidence": 0.85,
+    "status": "active",
+    "head": "When a later run disproves an earlier diagnosis, write a superseding ledger entry that names the corrected entry, states the wrong reasoning AND the disproving evidence, and update"
+   },
+   {
+    "id": "R13_conversion_opt_cpm_premium_on_sparse_pixel",
+    "confidence": 0.45,
+    "status": "active",
+    "head": "On ODP's sparse-signal pixel (Purchase 0, AddToCart ~21/day), conversion-optimized delivery costs a large CPM premium over LINK_CLICKS delivery of comparable creative, because Meta"
+   },
+   {
+    "id": "R14_traffic_engines_into_fixed_funnel",
+    "confidence": 0.45,
+    "status": "active",
+    "head": "Pushed strategy 2026-07-11 (Hans 'push this strategy to loop'): with the checkout guest-gate FIXED (d4e9881), the standing book = cheap LINK_CLICKS traffic engines directed to ourd"
+   },
+   {
+    "id": "R15_funnel_routing_primary_gate_new_creative",
+    "confidence": 0.2,
+    "status": "retired",
+    "head": "CMO board verdict 2026-07-12 (6-agent debate wf_a83339b2: 4 lenses + adversarial-on-different-model + CMO synthesis; funnel-over-creative 80/20, confidence 0.82, adversarial CONFIR"
+   },
+   {
+    "id": "R16_atc_opt_is_the_cart_engine",
+    "confidence": 0.75,
+    "status": "active",
+    "head": "PROVEN 2026-07-16 (natural experiment, R12-grade evidence): conversion-optimized (ADD_TO_CART) delivery IS ODP's cart engine — pausing the ATC-opt set collapsed ATC 25/day -> 1/day"
+   }
+  ],
+  "recent_records": [
+   {
+    "file": "ODP/2026-07-16-creative-revision-ab-and-atc-restore.json",
+    "date": "2026-07-16",
+    "type": "R12-correction+ab-test",
+    "note": "R13/R14 corrected, R15 RETIRED (falsified), R16 added (ATC-opt = the cart engine). Killed cart retarget; restored ATC-opt set; launched creative-revision A/B (proof/ATC-max vs guarantee/Purchase-max) vs generic control."
+   },
+   {
+    "file": "ODP/2026-07-13-loop-b.json",
+    "date": "2026-07-13",
+    "type": "daily-loop (always-on kill-and-test) — second monitor pass",
+    "note": "Verified account clean (errors={}), 4 live LINK_CLICKS engines all cheap+healthy (CPM 3.3k-7.2k: Website-LE 7237/CTR11.55, WA->Web 3351/CTR4.15, Sales-Funnel-R15 4107/CTR3.76 HELD mid-read, Affiliate 3553/CTR3.82). RESOL"
+   },
+   {
+    "file": "ODP/2026-07-13-loop.json",
+    "date": "2026-07-13",
+    "type": "daily-loop + within-cycle self-correction",
+    "note": "SELF-CORRECTION: auto-paused adset 120247397367160694 on a stale-index misread (thought Purchase-opt into dead funnel); it is actually Hans's LINK_CLICKS Cart Abandoner Retarget engine (active_book, activated 07-12). Att"
+   },
+   {
+    "file": "ODP/2026-07-12-funnel-vs-creative-debate.json",
+    "date": "2026-07-12",
+    "type": "cmo-debate+funnel-routing",
+    "note": "FUNNEL/routing 80/20 (conf 0.82); NEW creative WAITS behind a routing A/B. Routed top-2 winners -> /bukti-nyata/colostrum (ad 120247655829580694) + /vitalitypackage/colostrum (ad 120247655829830694) alongside generic-PDP"
+   },
+   {
+    "file": "ODP/2026-07-12-atc-pixel-success-and-cart-retarget.json",
+    "date": "2026-07-12",
+    "type": "book-restructure",
+    "note": "Hans directive: (1) ATC-pixel = sales-funnel success at lowest CPM/CPC/highest CTR -> paused 64k-CPM ATC-opt set 120247441023720694, activated Sales Funnel Traffic (LE) 120234996651390694 with winners-only (losers #2/#4/"
+   },
+   {
+    "file": "ODP/2026-07-11-website-traffic-LE-repoint.json",
+    "date": "2026-07-11",
+    "type": "campaign-repurpose+activation",
+    "note": "Website Traffic (LE) 120215938611510694 repointed to ourdailypets.com: 3 winner videos (Traffic#8/#6/#3) rebuilt as web SHOP_NOW ads + 11 legacy Order-Now ads paused; LINK_CLICKS; activated 50k/day CBO."
+   },
+   {
+    "file": "ODP/2026-07-11-affiliate-recruit-and-wa-website-repoint.json",
+    "date": "2026-07-11",
+    "type": "new-campaign+repoint+pixel",
+    "note": "Affiliate Recruitment campaign 120247620309870694 built+ACTIVATED (50k/day -> /affiliate-program); WA campaign repointed to website; affiliate CompleteRegistration pixel shipped (aed6785)."
+   },
+   {
+    "file": "ODP/2026-07-11-loop.json",
+    "date": "2026-07-11",
+    "type": "daily-loop (always-on kill-and-test)",
+    "note": "KILLED IC-opt adset 120246750560050694 (CPM 172,316 = ~50x WA engine, CPC 1,498, IC-optimized into dead funnel, 150k/day) — reversible pause, success:true. R12 correction: 07-07 ledger mis-recorded it as PAUSED but 711k "
+   },
+   {
+    "file": "ODP/2026-07-11-retarget-and-subscription-atc.json",
+    "date": "2026-07-11",
+    "type": "optimization+execution",
+    "note": "Subscription ATC set 120247441023720694 widened to 6 proven winners (5 added+activated); retarget->Purchase campaigns HELD (Purchase dark, ATC-180d audience <=1000)"
+   },
+   {
+    "file": "ODP/2026-07-07-loop.json",
+    "date": "2026-07-07",
+    "type": "daily-loop",
+    "note": "monitor cycle: account clean/healthy, all waste already paused, 2 ATC-opt tests maturing (<1000 impr), no live entity clears kill threshold; manifest carried forward"
+   }
+  ]
+ }
+}

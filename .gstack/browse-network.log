@@ -1,0 +1,2 @@
+[2026-07-20T07:33:25.104Z] GET http://localhost:8901/ → 200 (32ms, 11742B)
+[2026-07-20T07:33:25.154Z] GET http://localhost:8901/data.json → 200 (68ms, 20054B)
