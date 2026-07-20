@@ -51,6 +51,27 @@ def pillar_eval(camp, db):
          "note": f"{attributed}/3 attributed orders on arm; realized ROAS >= 2.0 + span/clicks clause"},
     ]
 
+
+GAUNTLET = "CERTIFY requires ALL: realized ROAS>=2.0 (>=3 DB-attributed orders, span>=2d or >=500 clicks) + ATC efficiency + Cart->Purchase + CPM/CPC/CTR beat control (pillar rev6)"
+
+def funnel_verdict(c):
+    stage = c.get("stage", "unknown")
+    mc = c.get("mc_verdict") or {}
+    if stage == "promoted":
+        return "LIVE ON SITE", "certified + listed in /promotions"
+    if stage == "certified":
+        return "PUBLISH", "gauntlet passed — promote to /promotions"
+    if stage == "forward_test":
+        return "HOLD — testing", "in 24h verdict ladder; needs 3 attributed orders + ROAS>=2.0"
+    if stage == "built_dark":
+        return "HOLD — dark", "live URL, not listed; awaiting forward-test spend"
+    if stage == "backtested":
+        v = str(mc.get("verdict") or mc.get("decision") or "").upper()
+        return ("QUEUE — build dark" if v in ("AUTO_OK","PASS","PROPOSE") else "HOLD — MC weak"),                ("MC " + (v or "done") + " p50 " + str(mc.get("roas_p50", mc.get("p50", "?"))))
+    if stage == "mined":
+        return "NOT YET — mined only", "awaits MC backtest + cermin pre-spend gate"
+    return "GRAVEYARD", c.get("cause", "falsified")
+
 def bench_append(runrate, gap, realized):
     import time
     row = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -162,6 +183,19 @@ def build():
             "realized_roas_latest": realized[0] if realized else None,
             "calibration_entries": jsonl_count(ODP_STATE / "calibration.jsonl"),
             "factory": {
+                "gauntlet": GAUNTLET,
+                "funnels": [
+                    {"id": c.get("id"), "name": c.get("name"), "stage": c.get("stage"),
+                     "kind": c.get("kind"), "thesis": (c.get("thesis") or "")[:160],
+                     "risk": (c.get("risk") or "")[:100],
+                     "mc": (c.get("mc_verdict") or None),
+                     "verdict": funnel_verdict(c)[0], "verdict_why": funnel_verdict(c)[1]}
+                    for c in ((backlog or {}).get("candidates") or [])
+                ] + [
+                    {"id": k, "name": (v or {}).get("name", k), "stage": "graveyard",
+                     "verdict": "GRAVEYARD", "verdict_why": ((v or {}).get("cause") or "falsified")[:120]}
+                    for k, v in ((graveyard or {}).items() if isinstance(graveyard, dict) else [])
+                ],
                 "backlog_stages": stages or None,
                 "graveyard_count": len(graveyard) if isinstance(graveyard, list)
                 else (len(graveyard.get("funnels", [])) if isinstance(graveyard, dict) else None),

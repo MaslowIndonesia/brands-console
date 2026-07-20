@@ -120,8 +120,11 @@
 <h2>Rulebook (learned heuristics)</h2>
 <div class="card" id="rules"></div>
 
-<h2>Funnel factory & measurement</h2>
-<div class="tiles" id="factory"></div>
+<h2>Funnel factory — every funnel, its stats, and the publish verdict</h2>
+<p style="font-size:.72rem;color:var(--faint);margin-bottom:8px" id="gauntlet"></p>
+<div class="tscroll"><table id="funnels"><thead><tr><th>Funnel</th><th>Stage</th>
+<th>MC / stats</th><th>Verdict</th><th>Why</th></tr></thead><tbody></tbody></table></div>
+<div class="tiles" id="factory" style="margin-top:12px"></div>
 
 <h2>Recent loop activity</h2>
 <div class="card"><ul class="feed" id="feed"></ul></div>
@@ -261,6 +264,16 @@ fetch("data.json").then(r=>r.json()).then(d=>{ window.__data=d;
     </div>`).join("") || `<p class="empty">no rules yet</p>`;
 
   const f=o.factory||{}, st=f.backlog_stages;
+  $("#gauntlet").textContent=f.gauntlet||"";
+  const F=f.funnels||[];
+  $("#funnels tbody").innerHTML=F.length?F.map(x=>{
+    const vcol=/PUBLISH|LIVE/.test(x.verdict)?"var(--live)":/GRAVEYARD|weak/.test(x.verdict)?"var(--blocked)":"var(--warn)";
+    const mc=x.mc?esc(JSON.stringify(x.mc).slice(1,90).replace(/"/g,"")):"—";
+    return `<tr><td>${esc(x.name||x.id)}</td><td style="font-family:var(--mono);font-size:.7rem">${esc(x.stage)}</td>
+    <td style="font-family:var(--mono);font-size:.68rem">${mc}</td>
+    <td style="color:${vcol};font-family:var(--mono);font-size:.7rem;white-space:nowrap">${esc(x.verdict)}</td>
+    <td style="font-size:.72rem">${esc(x.verdict_why||"")}</td></tr>`;}).join("")
+    :`<tr><td colspan="5" class="empty">no funnels in the factory yet</td></tr>`;
   $("#factory").innerHTML = `
     <div class="tile"><div class="l">Funnel backlog</div>
       <div class="v">${st?Object.values(st).reduce((a,b)=>a+b,0):"—"}</div>
