@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T07:54:19+00:00",
+ "generated_at": "2026-07-20T08:02:41+00:00",
  "registry": {
   "schema_version": 1,
   "updated": "2026-07-20",
@@ -157,6 +157,162 @@
   },
   "calibration_entries": 21,
   "factory": {
+   "gauntlet": "CERTIFY requires ALL: realized ROAS>=2.0 (>=3 DB-attributed orders, span>=2d or >=500 clicks) + ATC efficiency + Cart->Purchase + CPM/CPC/CTR beat control (pillar rev6)",
+   "funnels": [
+    {
+     "id": "F1-bukti-nyata-member10",
+     "name": "Bukti Nyata x Member-10% retarget",
+     "stage": "mined",
+     "kind": "retarget",
+     "thesis": "Retarget ODP AddToCart-180d + engagers with 'daftar = diskon 10% otomatis' — uses the LIVE member-discount feature to attack the known cold-checkout friction. Z",
+     "risk": "low",
+     "mc": {
+      "run": "2026-07-13-loop-c",
+      "verdict": "REJECT",
+      "p_target": 0.0325,
+      "roas_p50": 0.74,
+      "roas_p90": 4.29,
+      "roas_mean": 1.69,
+      "priors": "saturated ATC-180d audience (observed CPM 197k, reach 45, freq 3.76); purchase_given_ic=0 observed",
+      "lever_that_must_improve": "(1) ATC-180d audience >1000 to escape the 197k saturated CPM; (2) first cold ATC->Purchase conversion (purchase_given_ic currently 0). Both are downstream of the R15 funnel-routing test + Pillar-0 GREEN flip.",
+      "gate_note": "Un-pausing/scaling a retarget = net-new spend into RED funnel = forbidden regardless of MC. REJECT is doubly-correct."
+     },
+     "verdict": "NOT YET — mined only",
+     "verdict_why": "awaits MC backtest + cermin pre-spend gate"
+    },
+    {
+     "id": "F2-subscription-first",
+     "name": "Langganan Vitality funnel (subscription-first)",
+     "stage": "mined",
+     "kind": "ltv",
+     "thesis": "Land on Subscribe&Save with permanent 10% + Rp50k voucher per Rp5M spelled out. Target: existing purchasers + warm pixel. LTV play — ROAS improves via repeat ch",
+     "risk": "low",
+     "mc": null,
+     "verdict": "NOT YET — mined only",
+     "verdict_why": "awaits MC backtest + cermin pre-spend gate"
+    },
+    {
+     "id": "F3-hips-joints-funnel",
+     "name": "Hips & Joints funnel (Figma exists, NOT live)",
+     "stage": "mined",
+     "kind": "new_funnel",
+     "thesis": "Senior-dog mobility angle — same aging-empathy grammar as the proven colostrum vitalitypackage funnel. Figma at ~/Desktop/Development Figma - ODP Funnels/.",
+     "risk": "med",
+     "mc": null,
+     "verdict": "NOT YET — mined only",
+     "verdict_why": "awaits MC backtest + cermin pre-spend gate"
+    },
+    {
+     "id": "F4-appetite-booster-funnel",
+     "name": "Appetite Booster funnel (Figma exists, NOT live)",
+     "stage": "mined",
+     "kind": "new_funnel",
+     "thesis": "'Anabul susah makan' = highest-empathy pain point in ID pet market. Figma ready; funnel renderer exists.",
+     "risk": "med",
+     "mc": null,
+     "verdict": "NOT YET — mined only",
+     "verdict_why": "awaits MC backtest + cermin pre-spend gate"
+    },
+    {
+     "id": "F5-voucher-flywheel-organic",
+     "name": "Voucher flywheel announcement (organic-first)",
+     "stage": "mined",
+     "kind": "promo",
+     "thesis": "'Belanja rutin, voucher otomatis' to customer list via Brevo email + IG + WA — $0 media test of the voucher hook before any paid spend. Measures hook resonance ",
+     "risk": "low",
+     "mc": null,
+     "verdict": "NOT YET — mined only",
+     "verdict_why": "awaits MC backtest + cermin pre-spend gate"
+    },
+    {
+     "id": "F6-gut-immunity-duo",
+     "name": "Gut-Immunity Duo bundle (Colostrum + Probiotics)",
+     "stage": "backtested",
+     "kind": "aov",
+     "thesis": "AOV raiser at cart/checkout. MC shows AOV is a first-order ROAS lever at current funnel rates — bundle beats rate-optimization for speed.",
+     "risk": "low",
+     "mc": {
+      "run": "2026-07-14-loop-a",
+      "verdict": "REJECT",
+      "p_target": 0.0,
+      "note": "AOV bundle raises AOV but purchase_given_ic=0 observed => conversion-gated like the whole paid backlog. Lever to unlock: first attributed cold conversion (R15 test / attribution join), not AOV."
+     },
+     "verdict": "HOLD — MC weak",
+     "verdict_why": "MC REJECT p50 ?"
+    },
+    {
+     "id": "F7-condition-vet-authority",
+     "name": "Condition-specific x expert-authority funnel grammar (mined: Vetpicurean 157d long-runner)",
+     "stage": "backtested",
+     "kind": "new_funnel_grammar",
+     "thesis": "Attack ONE specific named condition (urinary/saluran-kemih, gut/pencernaan via Probiotics, or joint mobility via Hip&Joint) with a 'terapi/atasi [kondisi]' hook",
+     "risk": "med",
+     "mc": {
+      "run": "2026-07-16-loop-a",
+      "verdict": "REJECT",
+      "p_target": 0.0415,
+      "p_stretch": 0.0,
+      "roas_p10": 0.06,
+      "roas_p50": 0.39,
+      "roas_p90": 1.38,
+      "roas_mean": 0.59,
+      "expected_purchases": 0.45,
+      "priors": "regime-consistent conversion-opt delivery (observed Bukti IC-opt Jul 9-10: CPM 119-235k, CTR 341/3075, atc|click 70/341, ic|atc 47/70) x purchase_given_ic [0,57] (57 observed InitiateCheckout events Jul 8-15 -> ZERO paid orders) x AOV [174k,621k] from DB last-paid rows",
+      "lever_that_must_improve": "purchase_given_ic. 57 observed IC -> 0 purchases is now the dominant blocking term; no funnel GRAMMAR (F7 included) can clear 2.0 while IC->Purchase reads 0/57. The unlock is the checkout/payment step, NOT a new funnel angle.",
+      "min_evidence_lock": "FORCED REJECT (0 attributed paid orders, need >=3) — fired independently of the math.",
+      "integrity_note": "First param draft for F7 mixed regimes (cheap-book CPM 4k paired with conversion-opt conversion rates) and flattered p_target to 0.5376. That combination is unobservable — cheap LINK_CLICKS delivery does not produce conversion-opt funnel rates. Re-run with regime-consistent priors -> 0.0415. The min-evidence lock forced REJECT on BOTH drafts, i.e. it caught exactly the priors-gaming it exists to catch. Recorded verdict = the honest one."
+     },
+     "verdict": "HOLD — MC weak",
+     "verdict_why": "MC REJECT p50 0.39"
+    },
+    {
+     "id": "F8-condition-matrix-vet",
+     "name": "Condition-matrix vet-authority funnel (Ramical + Vetpicurean grammar)",
+     "stage": "backtested",
+     "kind": "new_funnel_grammar",
+     "thesis": "ONE funnel architecture, N condition-specific entry hooks mapped to ODP SKUs (immunity/gut→Colostrum+Probiotics, mobility→Hip&Joint, skin/joint→Multi Collagen, ",
+     "risk": "med",
+     "mc": null,
+     "verdict": "HOLD — MC weak",
+     "verdict_why": "MC done p50 ?"
+    },
+    {
+     "id": "F-member-growth",
+     "name": "Member Acquisition — Daftar & Hemat (users + subscribers)",
+     "stage": "mined",
+     "kind": "acquisition",
+     "thesis": "Hans directive 2026-07-20: campaign to increase total registered users and total subscribers. Angle: registration = INSTANT permanent 10% member discount + vouc",
+     "risk": "low",
+     "mc": null,
+     "verdict": "NOT YET — mined only",
+     "verdict_why": "awaits MC backtest + cermin pre-spend gate"
+    },
+    {
+     "id": "F-affiliate-recruit",
+     "name": "Affiliate Recruitment — pet-creator side income",
+     "stage": "mined",
+     "kind": "acquisition",
+     "thesis": "Hans directive 2026-07-20: grow total affiliates. Target ID micro pet-creators (cat-mom/dog-dad content posters): 'jadi affiliate ODP — komisi tiap order + disk",
+     "risk": "low",
+     "mc": null,
+     "verdict": "NOT YET — mined only",
+     "verdict_why": "awaits MC backtest + cermin pre-spend gate"
+    },
+    {
+     "id": "dead",
+     "name": "dead",
+     "stage": "graveyard",
+     "verdict": "GRAVEYARD",
+     "verdict_why": "[]"
+    },
+    {
+     "id": "note",
+     "name": "note",
+     "stage": "graveyard",
+     "verdict": "GRAVEYARD",
+     "verdict_why": "cause of death + falsified assumption per entry; read during mining"
+    }
+   ],
    "backlog_stages": {
     "mined": 7,
     "backtested": 3

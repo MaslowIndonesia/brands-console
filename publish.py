@@ -192,8 +192,9 @@ def build():
                      "verdict": funnel_verdict(c)[0], "verdict_why": funnel_verdict(c)[1]}
                     for c in ((backlog or {}).get("candidates") or [])
                 ] + [
-                    {"id": k, "name": (v or {}).get("name", k), "stage": "graveyard",
-                     "verdict": "GRAVEYARD", "verdict_why": ((v or {}).get("cause") or "falsified")[:120]}
+                    {"id": k, "name": (v.get("name", k) if isinstance(v, dict) else k),
+                     "stage": "graveyard", "verdict": "GRAVEYARD",
+                     "verdict_why": ((v.get("cause") if isinstance(v, dict) else str(v)) or "falsified")[:120]}
                     for k, v in ((graveyard or {}).items() if isinstance(graveyard, dict) else [])
                 ],
                 "backlog_stages": stages or None,
