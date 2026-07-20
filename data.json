@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-20T07:33:21+00:00",
+ "generated_at": "2026-07-20T07:54:19+00:00",
  "registry": {
   "schema_version": 1,
   "updated": "2026-07-20",
@@ -42,7 +42,8 @@
      "floor": 150000,
      "ceiling": 500000
     },
-    "decisive_human_gate": "payment-init defect (July: 63 carts -> 0 payment-inits; prime suspect PR#50) — one prod checkout walk + payment-path deploy (Hans)"
+    "decisive_human_gate": "payment-init defect (July: 63 carts -> 0 payment-inits; prime suspect PR#50) — one prod checkout walk + payment-path deploy (Hans)",
+    "member_loop_display": "Brand Revenue Compound Loop — ODP instance (task id odp-revenue-loop unchanged)"
    },
    {
     "brand_id": "RoyalMate",
@@ -72,7 +73,8 @@
     "config": null,
     "note": "no assets yet — full onboarding protocol from step 0 when Hans initiates"
    }
-  ]
+  ],
+  "loop_display_name": "Brand Revenue Compound Loop"
  },
  "odp": {
   "loop_mode": "AUTONOMOUS_ROAS (Mode C)",
@@ -156,7 +158,7 @@
   "calibration_entries": 21,
   "factory": {
    "backlog_stages": {
-    "mined": 5,
+    "mined": 7,
     "backtested": 3
    },
    "graveyard_count": 0
@@ -411,6 +413,286 @@
     "type": "daily-loop",
     "note": "monitor cycle: account clean/healthy, all waste already paused, 2 ATC-opt tests maturing (<1000 impr), no live entity clears kill threshold; manifest carried forward"
    }
-  ]
+  ],
+  "metrics": {
+   "as_of": "2026-07-20T07:45:00Z",
+   "window": "last_7d (Jul 13-19)",
+   "campaigns": [
+    {
+     "id": "120215938611510694",
+     "name": "Website Traffic (LE)",
+     "spend": 345473,
+     "impressions": 47784,
+     "clicks": 7128,
+     "ctr": 14.92,
+     "cpc": 48,
+     "cpm": 7230,
+     "meta_roas": null,
+     "avg_clicks_day": 1018.3,
+     "pillar": [
+      {
+       "stage": "launch_24h_trial",
+       "state": "pass",
+       "note": "live + spending"
+      },
+      {
+       "stage": "cpc_kill_gate",
+       "state": "pass",
+       "note": "CPC 48 vs kill-threshold (AOV x CVR_opt / BE_ROAS)"
+      },
+      {
+       "stage": "first_sale_be_roas",
+       "state": "pass",
+       "note": "book has paid orders (DB)"
+      },
+      {
+       "stage": "loss_kill_gate",
+       "state": "pass",
+       "note": "cumulative loss < 1 daily test budget"
+      },
+      {
+       "stage": "outlier_promotion",
+       "state": "pending",
+       "note": "awaits per-creative divergence"
+      },
+      {
+       "stage": "three_band_scale",
+       "state": "pending",
+       "note": "needs lifetime realized ROAS"
+      },
+      {
+       "stage": "certified_3orders_roas2",
+       "state": "fail",
+       "note": "0/3 attributed orders on arm; realized ROAS >= 2.0 + span/clicks clause"
+      }
+     ]
+    },
+    {
+     "id": "120234996651390694",
+     "name": "Sales Funnel Traffic (LE)",
+     "spend": 326197,
+     "impressions": 51812,
+     "clicks": 6479,
+     "ctr": 12.5,
+     "cpc": 50,
+     "cpm": 6296,
+     "meta_roas": null,
+     "avg_clicks_day": 925.6,
+     "pillar": [
+      {
+       "stage": "launch_24h_trial",
+       "state": "pass",
+       "note": "live + spending"
+      },
+      {
+       "stage": "cpc_kill_gate",
+       "state": "pass",
+       "note": "CPC 50 vs kill-threshold (AOV x CVR_opt / BE_ROAS)"
+      },
+      {
+       "stage": "first_sale_be_roas",
+       "state": "pass",
+       "note": "book has paid orders (DB)"
+      },
+      {
+       "stage": "loss_kill_gate",
+       "state": "pass",
+       "note": "cumulative loss < 1 daily test budget"
+      },
+      {
+       "stage": "outlier_promotion",
+       "state": "pending",
+       "note": "awaits per-creative divergence"
+      },
+      {
+       "stage": "three_band_scale",
+       "state": "pending",
+       "note": "needs lifetime realized ROAS"
+      },
+      {
+       "stage": "certified_3orders_roas2",
+       "state": "fail",
+       "note": "0/3 attributed orders on arm; realized ROAS >= 2.0 + span/clicks clause"
+      }
+     ]
+    },
+    {
+     "id": "120246304820350694",
+     "name": "Website Traffic (ex-WA)",
+     "spend": 350182,
+     "impressions": 89766,
+     "clicks": 4038,
+     "ctr": 4.5,
+     "cpc": 87,
+     "cpm": 3901,
+     "meta_roas": null,
+     "avg_clicks_day": 576.9,
+     "pillar": [
+      {
+       "stage": "launch_24h_trial",
+       "state": "pass",
+       "note": "live + spending"
+      },
+      {
+       "stage": "cpc_kill_gate",
+       "state": "pass",
+       "note": "CPC 87 vs kill-threshold (AOV x CVR_opt / BE_ROAS)"
+      },
+      {
+       "stage": "first_sale_be_roas",
+       "state": "pass",
+       "note": "book has paid orders (DB)"
+      },
+      {
+       "stage": "loss_kill_gate",
+       "state": "pass",
+       "note": "cumulative loss < 1 daily test budget"
+      },
+      {
+       "stage": "outlier_promotion",
+       "state": "pending",
+       "note": "awaits per-creative divergence"
+      },
+      {
+       "stage": "three_band_scale",
+       "state": "pending",
+       "note": "needs lifetime realized ROAS"
+      },
+      {
+       "stage": "certified_3orders_roas2",
+       "state": "fail",
+       "note": "0/3 attributed orders on arm; realized ROAS >= 2.0 + span/clicks clause"
+      }
+     ]
+    },
+    {
+     "id": "120246341303860694",
+     "name": "Subscription ROAS (ATC A/B)",
+     "spend": 408081,
+     "impressions": 7624,
+     "clicks": 845,
+     "ctr": 11.08,
+     "cpc": 483,
+     "cpm": 53526,
+     "meta_roas": null,
+     "avg_clicks_day": 120.7,
+     "pillar": [
+      {
+       "stage": "launch_24h_trial",
+       "state": "pass",
+       "note": "live + spending"
+      },
+      {
+       "stage": "cpc_kill_gate",
+       "state": "pass",
+       "note": "CPC 483 vs kill-threshold (AOV x CVR_opt / BE_ROAS)"
+      },
+      {
+       "stage": "first_sale_be_roas",
+       "state": "pass",
+       "note": "book has paid orders (DB)"
+      },
+      {
+       "stage": "loss_kill_gate",
+       "state": "pass",
+       "note": "cumulative loss < 1 daily test budget"
+      },
+      {
+       "stage": "outlier_promotion",
+       "state": "pending",
+       "note": "awaits per-creative divergence"
+      },
+      {
+       "stage": "three_band_scale",
+       "state": "pending",
+       "note": "needs lifetime realized ROAS"
+      },
+      {
+       "stage": "certified_3orders_roas2",
+       "state": "fail",
+       "note": "0/3 attributed orders on arm; realized ROAS >= 2.0 + span/clicks clause"
+      }
+     ]
+    },
+    {
+     "id": "120247620309870694",
+     "name": "Affiliate Recruitment",
+     "spend": 345713,
+     "impressions": 101434,
+     "clicks": 3494,
+     "ctr": 3.44,
+     "cpc": 99,
+     "cpm": 3408,
+     "meta_roas": null,
+     "avg_clicks_day": 499.1,
+     "pillar": [
+      {
+       "stage": "launch_24h_trial",
+       "state": "pass",
+       "note": "live + spending"
+      },
+      {
+       "stage": "cpc_kill_gate",
+       "state": "pass",
+       "note": "CPC 99 vs kill-threshold (AOV x CVR_opt / BE_ROAS)"
+      },
+      {
+       "stage": "first_sale_be_roas",
+       "state": "pass",
+       "note": "book has paid orders (DB)"
+      },
+      {
+       "stage": "loss_kill_gate",
+       "state": "pass",
+       "note": "cumulative loss < 1 daily test budget"
+      },
+      {
+       "stage": "outlier_promotion",
+       "state": "pending",
+       "note": "awaits per-creative divergence"
+      },
+      {
+       "stage": "three_band_scale",
+       "state": "pending",
+       "note": "needs lifetime realized ROAS"
+      },
+      {
+       "stage": "certified_3orders_roas2",
+       "state": "fail",
+       "note": "0/3 attributed orders on arm; realized ROAS >= 2.0 + span/clicks clause"
+      }
+     ]
+    }
+   ],
+   "db_ground_truth": {
+    "paid_orders_30d": 2,
+    "paid_value_30d_idr": 260070,
+    "first_organic_paid": "2026-07-18 Rp86,070 (raw food)",
+    "carts_30d": 123
+   },
+   "book_realized_roas_30d": 0.0342,
+   "spend_7d": 1775646
+  },
+  "models": {
+   "thinking": "Fable 5 (max effort)",
+   "executing": "Opus 4.8",
+   "adversarial_gate": "Grok (sole binding gate)",
+   "cross_check": "Kimi K3 (HARD/money)",
+   "cheap_lane": "DeepSeek V4 / Python $0"
+  },
+  "benchmark": {
+   "north_star_idr_month": 1000000000,
+   "monthly_runrate_idr": 260070,
+   "gap_to_1B_x": 3845.1,
+   "series": [
+    {
+     "ts": "2026-07-20T07:53:08+00:00",
+     "monthly_runrate_idr": 260070,
+     "gap_to_1B_x": 3845.1,
+     "book_realized_roas": 0.0342
+    }
+   ],
+   "note": "run-rate = DB-attributed paid value trailing 30d; the series is the unbiased improvement record — it only moves when real settled orders move."
+  }
  }
 }

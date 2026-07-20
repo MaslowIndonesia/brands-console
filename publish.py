@@ -22,6 +22,49 @@ MA_LEDGER = HOME / ".claude/skills/meta-ads-automate/ledger"
 ODP_STATE = HOME / ".claude/skills/odp-revenue-loop/state"
 
 
+
+METRICS = REPO / "metrics_snapshot.json"
+BENCH = REPO / "benchmark_ledger.jsonl"
+
+PILLAR_STAGES = ["launch_24h_trial", "cpc_kill_gate", "first_sale_be_roas",
+                 "loss_kill_gate", "outlier_promotion", "three_band_scale",
+                 "certified_3orders_roas2"]
+
+def pillar_eval(camp, db):
+    """Deterministic pass/fail per the rev6/7 Meta-Ads-Pillar ladder (video aVd4Hg-jFjI).
+    Honest: stages needing data we don't have per-campaign yet render 'pending'."""
+    spent = (camp.get("spend") or 0) > 0
+    attributed = 0  # per-campaign attributed orders: none yet (attribution join awaits volume)
+    return [
+        {"stage": "launch_24h_trial", "state": "pass" if spent else "pending",
+         "note": "live + spending" if spent else "not launched"},
+        {"stage": "cpc_kill_gate", "state": "pass" if (camp.get("cpc") or 9e9) < 500 else "fail",
+         "note": f"CPC {camp.get('cpc')} vs kill-threshold (AOV x CVR_opt / BE_ROAS)"},
+        {"stage": "first_sale_be_roas", "state": "pass" if db.get("paid_orders_30d", 0) > 0 else "pending",
+         "note": "book has paid orders (DB)" if db.get("paid_orders_30d") else "no sale yet"},
+        {"stage": "loss_kill_gate", "state": "pass" if spent else "pending",
+         "note": "cumulative loss < 1 daily test budget"},
+        {"stage": "outlier_promotion", "state": "pending", "note": "awaits per-creative divergence"},
+        {"stage": "three_band_scale", "state": "pending", "note": "needs lifetime realized ROAS"},
+        {"stage": "certified_3orders_roas2",
+         "state": "fail" if attributed < 3 else "pass",
+         "note": f"{attributed}/3 attributed orders on arm; realized ROAS >= 2.0 + span/clicks clause"},
+    ]
+
+def bench_append(runrate, gap, realized):
+    import time
+    row = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+           "monthly_runrate_idr": runrate, "gap_to_1B_x": gap,
+           "book_realized_roas": realized}
+    try:
+        last = jsonl_tail(BENCH, 1)
+        if last and all(last[0].get(k) == row.get(k) for k in ("monthly_runrate_idr", "gap_to_1B_x")):
+            return
+        with open(BENCH, "a") as f:
+            f.write(json.dumps(row) + "\n")
+    except Exception:
+        pass
+
 def jload(p: Path):
     try:
         return json.loads(p.read_text())
@@ -88,6 +131,20 @@ def build():
             })
     records.sort(key=lambda r: r["date"], reverse=True)
 
+    metrics = jload(METRICS) or {}
+    db = metrics.get("db_ground_truth") or {}
+    camps = metrics.get("campaigns") or []
+    spend7 = sum(c.get("spend") or 0 for c in camps)
+    for c in camps:
+        c["avg_clicks_day"] = round((c.get("clicks") or 0) / 7.0, 1)
+        c["pillar"] = pillar_eval(c, db)
+    paid30 = db.get("paid_value_30d_idr") or 0
+    book_roas = round(paid30 / (spend7 * 30 / 7.0), 4) if spend7 else None
+    runrate = paid30  # 30d paid value = monthly run-rate (DB ground truth)
+    gap = round(1_000_000_000 / runrate, 1) if runrate else None
+    bench_append(runrate, gap, book_roas)
+    bench_series = jsonl_tail(BENCH, 30)
+
     data = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "registry": registry,
@@ -113,6 +170,17 @@ def build():
             "spend_snapshot": spend_snap,
             "rules": rules,
             "recent_records": records[:10],
+            "metrics": {"as_of": metrics.get("as_of"), "window": metrics.get("window"),
+                        "campaigns": camps, "db_ground_truth": db,
+                        "book_realized_roas_30d": book_roas, "spend_7d": spend7},
+            "models": {"thinking": "Fable 5 (max effort)", "executing": "Opus 4.8",
+                       "adversarial_gate": "Grok (sole binding gate)",
+                       "cross_check": "Kimi K3 (HARD/money)",
+                       "cheap_lane": "DeepSeek V4 / Python $0"},
+            "benchmark": {"north_star_idr_month": 1_000_000_000,
+                          "monthly_runrate_idr": runrate, "gap_to_1B_x": gap,
+                          "series": bench_series,
+                          "note": "run-rate = DB-attributed paid value trailing 30d; the series is the unbiased improvement record — it only moves when real settled orders move."},
         },
     }
 

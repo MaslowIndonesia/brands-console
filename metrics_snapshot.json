@@ -1,0 +1,13 @@
+{
+ "as_of": "2026-07-20T07:45:00Z",
+ "window": "last_7d (Jul 13-19)",
+ "source": "Meta Ads MCP ads_get_ad_entities campaign-level; refreshed by the loop each run",
+ "campaigns": [
+  {"id":"120215938611510694","name":"Website Traffic (LE)","spend":345473,"impressions":47784,"clicks":7128,"ctr":14.92,"cpc":48,"cpm":7230,"meta_roas":null},
+  {"id":"120234996651390694","name":"Sales Funnel Traffic (LE)","spend":326197,"impressions":51812,"clicks":6479,"ctr":12.50,"cpc":50,"cpm":6296,"meta_roas":null},
+  {"id":"120246304820350694","name":"Website Traffic (ex-WA)","spend":350182,"impressions":89766,"clicks":4038,"ctr":4.50,"cpc":87,"cpm":3901,"meta_roas":null},
+  {"id":"120246341303860694","name":"Subscription ROAS (ATC A/B)","spend":408081,"impressions":7624,"clicks":845,"ctr":11.08,"cpc":483,"cpm":53526,"meta_roas":null},
+  {"id":"120247620309870694","name":"Affiliate Recruitment","spend":345713,"impressions":101434,"clicks":3494,"ctr":3.44,"cpc":99,"cpm":3408,"meta_roas":null}
+ ],
+ "db_ground_truth": {"paid_orders_30d":2,"paid_value_30d_idr":260070,"first_organic_paid":"2026-07-18 Rp86,070 (raw food)","carts_30d":123}
+}

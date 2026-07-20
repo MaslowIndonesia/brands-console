@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brands Revenue Loop — Console</title>
+<title>Brand Revenue Compound Loop — Console</title>
 <style>
   :root{
     --ink:#0c1117; --panel:#121a24; --panel2:#0f1620; --line:#233042;
@@ -87,7 +87,7 @@
 </head>
 <body>
 <header>
-  <h1>BRANDS <b>REVENUE</b> LOOP</h1>
+  <h1>BRAND <b>REVENUE</b> COMPOUND LOOP</h1>
   <span class="pill p-live" id="fleet-pill">FLEET</span>
   <span class="meta"><span id="gen">loading…</span>
     <button id="themeBtn" aria-label="toggle theme">◐</button></span>
@@ -95,13 +95,24 @@
 
 <h2>Brands</h2>
 <div class="cards" id="brands"></div>
+<div class="card" id="brand-detail" style="display:none;margin-top:12px"></div>
 
-<h2>ODP — Active Book (Meta Ads)</h2>
+<h2 id="brand-ODP">ODP — Live Campaign Results (Meta Ads, last 7d)</h2>
 <div class="tiles" id="tiles"></div>
 <div class="tscroll" style="margin-top:12px"><table id="engines">
-  <thead><tr><th>Engine</th><th>Objective</th><th class="num">IDR/day</th><th>Success axis</th></tr></thead>
+  <thead><tr><th>Campaign</th><th class="num">ROAS</th><th class="num">CPC</th>
+  <th class="num">CPM</th><th class="num">CTR</th><th class="num">Clicks/day</th>
+  <th class="num">Spend 7d</th></tr></thead>
   <tbody></tbody></table></div>
 <div class="gate" id="gate"></div>
+
+<h2>Pillar ladder — campaign progress (video strategy, rev6 doctrine)</h2>
+<p style="font-size:.74rem;color:var(--faint);margin-bottom:8px">24h trial → CPC-kill → first-sale/BE-ROAS → loss-kill → outlier promotion → 3-band scale → CERTIFIED (≥3 attributed orders + ROAS ≥2.0). Live pass/fail per campaign; “pending” = not enough data, never assumed.</p>
+<div class="cards" id="pillars"></div>
+
+<h2>Loop drivers (LLMs) & benchmark — road to 1B/month</h2>
+<div class="tiles" id="models"></div>
+<div class="tiles" id="bench" style="margin-top:12px"></div>
 
 <h2>Creative A/B — pre-sell message test</h2>
 <div class="cards" id="ab"></div>
@@ -129,9 +140,20 @@ document.getElementById("themeBtn").onclick=()=>{
   const r=document.documentElement;
   r.dataset.theme = r.dataset.theme==="light" ? "dark" : "light";
 };
+window.showBrand=function(id){
+  const d=window.__data; if(!d) return;
+  const b=(d.registry.brands||[]).find(x=>x.brand_id===id); if(!b) return;
+  const el=document.getElementById("brand-detail");
+  if(id==="ODP"){ el.style.display="none";
+    document.getElementById("brand-ODP").scrollIntoView({behavior:"smooth"}); return; }
+  el.style.display="block";
+  el.innerHTML=`<h3>${b.display_name} — detail</h3>
+    <pre style="font-family:var(--mono);font-size:.72rem;color:var(--dim);white-space:pre-wrap;margin-top:8px">${JSON.stringify(b,null,1).replace(/[{}"]/g,"")}</pre>
+    <p style="font-size:.76rem;color:var(--faint)">Onboarding follows the umbrella protocol — this page fills with live campaign data automatically once the brand's member loop goes live.</p>`;
+};
 const IDR=n=>n==null?"—":new Intl.NumberFormat("id-ID").format(n);
 
-fetch("data.json").then(r=>r.json()).then(d=>{
+fetch("data.json").then(r=>r.json()).then(d=>{ window.__data=d;
   $("#gen").textContent="updated "+new Date(d.generated_at).toLocaleString();
   const reg=d.registry||{}, brands=(reg.brands||[]);
   const live=brands.filter(b=>b.status==="LIVE").length;
@@ -150,8 +172,10 @@ fetch("data.json").then(r=>r.json()).then(d=>{
     }else{
       body=`<p>${esc(b.note||"queued for onboarding")}</p>`;
     }
-    return `<div class="card"><h3>${esc(b.display_name)}
-      <span class="pill ${cls}">${esc(b.status)}</span></h3>${body}</div>`;
+    return `<a href="#brand-${esc(b.brand_id)}" style="text-decoration:none;color:inherit" onclick="showBrand('${esc(b.brand_id)}')">
+      <div class="card" style="cursor:pointer"><h3>${esc(b.display_name)}
+      <span class="pill ${cls}">${esc(b.status)}</span></h3>${body}
+      <p class="kv" style="color:var(--accent)">view details →</p></div></a>`;
   }).join("");
 
   const o=d.odp||{}, book=o.active_book||{};
@@ -176,11 +200,42 @@ fetch("data.json").then(r=>r.json()).then(d=>{
     <div class="tile"><div class="l">Book as of</div><div class="v" style="font-size:.9rem">${esc(book.as_of||"—")}</div>
       <div class="s">${esc((book.thesis||"").slice(0,90))}…</div></div>`;
 
-  $("#engines tbody").innerHTML = engines.length ? engines.map(c=>`
-    <tr><td>${esc(c.name)}</td><td>${esc(c.objective||"")}</td>
-    <td class="num">${IDR(c.budget_idr_day)}</td>
-    <td>${esc((c.success_axis||"").slice(0,110))}</td></tr>`).join("")
-    : `<tr><td colspan="4" class="empty">no live engines in the ledger</td></tr>`;
+  const M=(o.metrics&&o.metrics.campaigns)||[];
+  $("#engines tbody").innerHTML = M.length ? M.map(c=>`
+    <tr><td>${esc(c.name)}</td>
+    <td class="num">${c.meta_roas==null?"0.00× <span style='color:var(--faint)'>(no attributed)</span>":Number(c.meta_roas).toFixed(2)+"×"}</td>
+    <td class="num">${IDR(c.cpc)}</td><td class="num">${IDR(c.cpm)}</td>
+    <td class="num">${c.ctr!=null?c.ctr.toFixed(2)+"%":"—"}</td>
+    <td class="num">${c.avg_clicks_day??"—"}</td>
+    <td class="num">${IDR(c.spend)}</td></tr>`).join("")
+    : `<tr><td colspan="7" class="empty">no metrics snapshot yet</td></tr>`;
+
+  $("#pillars").innerHTML = M.map(c=>`
+    <div class="card"><h3 style="font-size:.85rem">${esc(c.name)}</h3>
+    <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+    ${(c.pillar||[]).map(s=>{
+      const col=s.state==="pass"?"var(--live)":s.state==="fail"?"var(--blocked)":"var(--faint)";
+      const mark=s.state==="pass"?"✓":s.state==="fail"?"✗":"·";
+      return `<div style="display:flex;gap:8px;font-size:.72rem;font-family:var(--mono)">
+        <span style="color:${col};flex:0 0 12px">${mark}</span>
+        <span style="color:var(--text);flex:0 0 170px">${esc(s.stage.replace(/_/g," "))}</span>
+        <span style="color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(s.note)}</span></div>`;
+    }).join("")}</div></div>`).join("");
+
+  const mod=o.models||{};
+  $("#models").innerHTML = Object.entries(mod).map(([k,v])=>`
+    <div class="tile"><div class="l">${esc(k.replace(/_/g," "))}</div>
+    <div class="v" style="font-size:.85rem">${esc(v)}</div></div>`).join("");
+
+  const bm=o.benchmark||{};
+  const series=(bm.series||[]);
+  const spark=series.map(s=>s.monthly_runrate_idr);
+  $("#bench").innerHTML = `
+    <div class="tile"><div class="l">North star</div><div class="v">IDR ${IDR(bm.north_star_idr_month)}</div><div class="s">nett / month (Hans 2026-07-19)</div></div>
+    <div class="tile"><div class="l">Current run-rate</div><div class="v">IDR ${IDR(bm.monthly_runrate_idr)}</div><div class="s">DB-attributed paid value, trailing 30d</div></div>
+    <div class="tile"><div class="l">Gap to 1B</div><div class="v">${bm.gap_to_1B_x?IDR(bm.gap_to_1B_x)+"×":"—"}</div><div class="s">shrinking = the loop is winning</div></div>
+    <div class="tile"><div class="l">Improvement record</div><div class="v">${series.length} pts</div>
+    <div class="s">${esc((bm.note||"").slice(0,110))}</div></div>`;
 
   const ab=book.ab_test;
   $("#ab").innerHTML = ab ? `
