@@ -5,84 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brand Revenue Compound Loop — Console</title>
 <style>
+  /* ——— Kimi Automate design language: warm paper, ink, one copper accent ——— */
   :root{
-    --ink:#0c1117; --panel:#121a24; --panel2:#0f1620; --line:#233042;
-    --text:#d7dee8; --dim:#8fa0b4; --faint:#5c6b7e;
-    --accent:#e08a4c; --accent2:#e6b450;
-    --live:#4cc38a; --warn:#e0b04c; --blocked:#d4756b; --planned:#7b8ea6;
+    --ink:#171310; --panel:#201a15; --panel2:#262019; --line:#342b21;
+    --text:#e9e1d3; --dim:#ab9e8b; --faint:#7d7061;
+    --accent:#d08a52; --accent-strong:#e09a5e; --accent-soft:rgba(208,138,82,.14);
+    --live:#6fae7d; --warn:#c9a25e; --blocked:#c07a6a; --planned:#8e8272;
+    --radius:10px;
     --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   }
   :root[data-theme="light"]{
-    --ink:#f4f6f9; --panel:#ffffff; --panel2:#eef1f5; --line:#d5dce4;
-    --text:#1a2430; --dim:#51617a; --faint:#8595a8;
-    --accent:#b85f24; --accent2:#96731a;
-    --live:#1d7a4f; --warn:#8a6a14; --blocked:#a33d33; --planned:#5c7089;
+    --ink:#f6f1e8; --panel:#fdfaf3; --panel2:#f1e9da; --line:#e4d9c6;
+    --text:#2c241a; --dim:#6d604d; --faint:#9a8c74;
+    --accent:#a85a24; --accent-strong:#8f4c1c; --accent-soft:rgba(168,90,36,.10);
+    --live:#4d7a52; --warn:#8a6a1f; --blocked:#a34a3c; --planned:#8e8272;
   }
   @media (prefers-color-scheme: light){
     :root:not([data-theme="dark"]){
-      --ink:#f4f6f9; --panel:#ffffff; --panel2:#eef1f5; --line:#d5dce4;
-      --text:#1a2430; --dim:#51617a; --faint:#8595a8;
-      --accent:#b85f24; --accent2:#96731a;
-      --live:#1d7a4f; --warn:#8a6a14; --blocked:#a33d33; --planned:#5c7089;
+      --ink:#f6f1e8; --panel:#fdfaf3; --panel2:#f1e9da; --line:#e4d9c6;
+      --text:#2c241a; --dim:#6d604d; --faint:#9a8c74;
+      --accent:#a85a24; --accent-strong:#8f4c1c; --accent-soft:rgba(168,90,36,.10);
+      --live:#4d7a52; --warn:#8a6a1f; --blocked:#a34a3c; --planned:#8e8272;
     }
   }
   *{box-sizing:border-box;margin:0}
-  body{background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.5;
-       padding:0 16px 64px;max-width:1180px;margin:0 auto}
-  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;padding:26px 0 8px;
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.55;
+       padding:0 20px 72px;max-width:1160px;margin:0 auto;
+       transition:background-color .25s ease,color .25s ease}
+  ::selection{background:var(--accent-soft)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;padding:34px 0 16px;
          border-bottom:1px solid var(--line)}
-  h1{font-size:1.15rem;letter-spacing:.14em;font-weight:700}
-  h1 b{color:var(--accent)}
-  .meta{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-left:auto}
-  .meta button{background:none;border:1px solid var(--line);color:var(--dim);border-radius:4px;
-               font:inherit;padding:2px 8px;cursor:pointer;margin-left:8px}
-  h2{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);
-     margin:30px 0 10px;text-wrap:balance}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  h1{font-size:1.12rem;letter-spacing:.16em;font-weight:700}
+  h1 b{color:var(--accent);font-weight:700}
+  .meta{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-left:auto;
+        display:flex;align-items:center;gap:10px}
+  .meta button{background:var(--panel);border:1px solid var(--line);color:var(--dim);
+               border-radius:6px;font:inherit;padding:3px 10px;cursor:pointer;
+               transition:border-color .2s ease,color .2s ease,background-color .25s ease}
+  .meta button:hover{border-color:var(--accent);color:var(--accent)}
+
+  section{margin-top:48px}
+  h2{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:0 0 14px;font-weight:600;display:flex;align-items:center;gap:10px;text-wrap:balance}
+  h2::before{content:"";flex:0 0 22px;height:2px;background:var(--accent);border-radius:1px}
+  .lede{font-size:.78rem;color:var(--faint);margin:-6px 0 14px;max-width:72ch}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        padding:18px 20px;transition:border-color .2s ease,background-color .25s ease}
+  a.cardlink{text-decoration:none;color:inherit;display:block}
+  a.cardlink .card{cursor:pointer;height:100%}
+  a.cardlink:hover .card,a.cardlink:focus-visible .card{border-color:var(--accent)}
   .card h3{font-size:.95rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .pill{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;padding:2px 8px;
+  .pill{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;padding:2px 9px;
         border-radius:999px;border:1px solid currentColor}
   .p-live{color:var(--live)} .p-blocked{color:var(--blocked)} .p-planned{color:var(--planned)}
   .p-warn{color:var(--warn)}
   .card p, .card li{font-size:.82rem;color:var(--dim)}
-  .card ul{padding-left:18px;margin-top:6px}
+  .card ul{padding-left:18px;margin-top:8px}
   .kv{font-family:var(--mono);font-size:.76rem;margin-top:8px;color:var(--dim)}
   .kv b{color:var(--text);font-weight:600}
-  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
-  .tile{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
-  .tile .v{font-family:var(--mono);font-size:1.25rem;font-variant-numeric:tabular-nums;
-           color:var(--text);margin-top:2px}
-  .tile .l{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-  .tile .s{font-size:.7rem;color:var(--dim);margin-top:4px}
-  .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
-  table{border-collapse:collapse;width:100%;min-width:620px}
-  th,td{font-size:.76rem;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
-  th{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
-     color:var(--faint);font-weight:500}
-  td{color:var(--dim)} td:first-child{color:var(--text)}
+  .cta{font-family:var(--mono);font-size:.72rem;color:var(--accent);margin-top:12px}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        padding:14px 16px;transition:border-color .2s ease,background-color .25s ease}
+  .tile .v{font-family:var(--mono);font-size:1.22rem;font-variant-numeric:tabular-nums;
+           color:var(--text);margin-top:3px}
+  .tile .l{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .tile .s{font-size:.7rem;color:var(--dim);margin-top:5px}
+
+  .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);
+           background:var(--panel);transition:border-color .2s ease,background-color .25s ease}
+  table{border-collapse:collapse;width:100%;min-width:640px}
+  th,td{font-size:.78rem;text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(even){background:var(--panel2)}
+  tbody tr{transition:background-color .15s ease}
+  tbody tr:hover{background:var(--accent-soft)}
+  th{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+     color:var(--faint);font-weight:500;border-bottom:1px solid var(--line)}
+  td{color:var(--dim)} td:first-child{color:var(--text);font-weight:500}
+  th.num,td.num{text-align:right}
   td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
-  .rule{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--panel2)}
+
+  /* pillar ladder rows */
+  .pl-rows{margin-top:10px;display:flex;flex-direction:column;gap:2px}
+  .pl-row{display:flex;gap:10px;align-items:baseline;font-size:.74rem;font-family:var(--mono);
+          padding:5px 0;border-bottom:1px solid var(--panel2)}
+  .pl-row:last-child{border-bottom:none}
+  .pl-mark{flex:0 0 14px}
+  .st-pass .pl-mark{color:var(--live)} .st-fail .pl-mark{color:var(--blocked)}
+  .st-pending .pl-mark{color:var(--faint)}
+  .pl-stage{flex:0 0 168px;color:var(--text)}
+  .pl-note{color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+           flex:1;min-width:0}
+
+  .rule{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--panel2)}
   .rule:last-child{border-bottom:none}
-  .rule .rid{font-family:var(--mono);font-size:.7rem;color:var(--text);flex:0 0 52px}
-  .rule .bar{flex:0 0 90px;height:5px;background:var(--panel2);border-radius:3px;overflow:hidden}
-  .rule .bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+  .rule .rid{font-family:var(--mono);font-size:.7rem;color:var(--text);flex:0 0 56px}
+  .rule .bar{flex:0 0 96px;height:4px;background:var(--panel2);border-radius:2px;overflow:hidden}
+  .rule .bar i{display:block;height:100%;background:var(--accent);border-radius:2px}
   .rule.retired .bar i{background:var(--faint)}
-  .rule .txt{font-size:.74rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;
+  .rule .txt{font-size:.76rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;
              white-space:nowrap;flex:1;min-width:0}
   .rule.retired .rid,.rule.retired .txt{color:var(--faint);text-decoration:line-through}
-  .gate{border-left:none;border:1px solid var(--line);background:var(--panel);
-        border-radius:8px;padding:14px 16px;margin-top:12px}
+
+  .gate{border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--panel);
+        border-radius:var(--radius);padding:14px 18px;margin-top:14px;
+        transition:border-color .2s ease,background-color .25s ease}
   .gate b{color:var(--warn)}
   .empty{color:var(--faint);font-style:italic;font-size:.8rem}
-  .feed li{margin-bottom:8px;list-style:none}
+
   .feed{padding:0}
-  .feed .d{font-family:var(--mono);font-size:.68rem;color:var(--accent2)}
+  .feed li{margin-bottom:12px;list-style:none;padding-left:14px;position:relative}
+  .feed li::before{content:"";position:absolute;left:0;top:.52em;width:5px;height:5px;
+                   border-radius:50%;background:var(--accent)}
+  .feed .d{font-family:var(--mono);font-size:.68rem;color:var(--accent)}
   .feed .t{font-size:.78rem;color:var(--dim)}
-  footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);
-         font-size:.72rem;color:var(--faint)}
+
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
+         font-size:.74rem;color:var(--faint);max-width:78ch}
   a{color:var(--accent)}
+  pre.detail{font-family:var(--mono);font-size:.72rem;color:var(--dim);white-space:pre-wrap;
+             margin-top:10px;background:var(--panel2);border-radius:8px;padding:12px 14px}
+
+  @media (max-width:640px){
+    body{padding:0 14px 56px}
+    header{padding:24px 0 12px}
+    section{margin-top:36px}
+    .pl-stage{flex:0 1 130px}
+    .pl-note{white-space:normal}
+    .rule .bar{flex:0 0 64px}
+    th,td{padding:8px 10px}
+  }
 </style>
 </head>
 <body>
@@ -90,44 +150,60 @@
   <h1>BRAND <b>REVENUE</b> COMPOUND LOOP</h1>
   <span class="pill p-live" id="fleet-pill">FLEET</span>
   <span class="meta"><span id="gen">loading…</span>
-    <button id="themeBtn" aria-label="toggle theme">◐</button></span>
+    <button id="themeBtn" aria-label="toggle theme" title="toggle theme">◐</button></span>
 </header>
 
-<h2>Brands</h2>
-<div class="cards" id="brands"></div>
-<div class="card" id="brand-detail" style="display:none;margin-top:12px"></div>
+<section>
+  <h2>Brands</h2>
+  <div class="cards" id="brands"></div>
+  <div class="card" id="brand-detail" style="display:none;margin-top:14px"></div>
+</section>
 
-<h2 id="brand-ODP">ODP — Live Campaign Results (Meta Ads, last 7d)</h2>
-<div class="tiles" id="tiles"></div>
-<div class="tscroll" style="margin-top:12px"><table id="engines">
-  <thead><tr><th>Campaign</th><th class="num">ROAS</th><th class="num">CPC</th>
-  <th class="num">CPM</th><th class="num">CTR</th><th class="num">Clicks/day</th>
-  <th class="num">Spend 7d</th></tr></thead>
-  <tbody></tbody></table></div>
-<div class="gate" id="gate"></div>
+<section>
+  <h2 id="brand-ODP">ODP — Live Campaign Results (Meta Ads, last 7d)</h2>
+  <div class="tiles" id="tiles"></div>
+  <div class="tscroll" style="margin-top:14px"><table id="engines">
+    <thead><tr><th>Campaign</th><th class="num">ROAS</th><th class="num">CPC</th>
+    <th class="num">CPM</th><th class="num">CTR</th><th class="num">Clicks/day</th>
+    <th class="num">Spend 7d</th></tr></thead>
+    <tbody></tbody></table></div>
+  <div class="gate" id="gate"></div>
+</section>
 
-<h2>Pillar ladder — campaign progress (video strategy, rev6 doctrine)</h2>
-<p style="font-size:.74rem;color:var(--faint);margin-bottom:8px">24h trial → CPC-kill → first-sale/BE-ROAS → loss-kill → outlier promotion → 3-band scale → CERTIFIED (≥3 attributed orders + ROAS ≥2.0). Live pass/fail per campaign; “pending” = not enough data, never assumed.</p>
-<div class="cards" id="pillars"></div>
+<section>
+  <h2>Pillar ladder — campaign progress (video strategy, rev6 doctrine)</h2>
+  <p class="lede">24h trial → CPC-kill → first-sale/BE-ROAS → loss-kill → outlier promotion → 3-band scale → CERTIFIED (≥3 attributed orders + ROAS ≥2.0). Live pass/fail per campaign; “pending” = not enough data, never assumed.</p>
+  <div class="cards" id="pillars"></div>
+</section>
 
-<h2>Loop drivers (LLMs) & benchmark — road to 1B/month</h2>
-<div class="tiles" id="models"></div>
-<div class="tiles" id="bench" style="margin-top:12px"></div>
+<section>
+  <h2>Loop drivers (LLMs) &amp; benchmark — road to 1B/month</h2>
+  <div class="tiles" id="models"></div>
+  <div class="tiles" id="bench" style="margin-top:14px"></div>
+</section>
 
-<h2>Creative A/B — pre-sell message test</h2>
-<div class="cards" id="ab"></div>
+<section>
+  <h2>Creative A/B — pre-sell message test</h2>
+  <div class="cards" id="ab"></div>
+</section>
 
-<h2>Rulebook (learned heuristics)</h2>
-<div class="card" id="rules"></div>
+<section>
+  <h2>Rulebook (learned heuristics)</h2>
+  <div class="card" id="rules"></div>
+</section>
 
-<h2>Funnel factory — every funnel, its stats, and the publish verdict</h2>
-<p style="font-size:.72rem;color:var(--faint);margin-bottom:8px" id="gauntlet"></p>
-<div class="tscroll"><table id="funnels"><thead><tr><th>Funnel</th><th>Stage</th>
-<th>MC / stats</th><th>Verdict</th><th>Why</th></tr></thead><tbody></tbody></table></div>
-<div class="tiles" id="factory" style="margin-top:12px"></div>
+<section>
+  <h2>Funnel factory — every funnel, its stats, and the publish verdict</h2>
+  <p class="lede" id="gauntlet"></p>
+  <div class="tscroll"><table id="funnels"><thead><tr><th>Funnel</th><th>Stage</th>
+  <th>MC / stats</th><th>Verdict</th><th>Why</th></tr></thead><tbody></tbody></table></div>
+  <div class="tiles" id="factory" style="margin-top:14px"></div>
+</section>
 
-<h2>Recent loop activity</h2>
-<div class="card"><ul class="feed" id="feed"></ul></div>
+<section>
+  <h2>Recent loop activity</h2>
+  <div class="card"><ul class="feed" id="feed"></ul></div>
+</section>
 
 <footer>
   Channels: <b>Meta Ads — LIVE (sole focus)</b> · Google Ads — gated-planned.
@@ -139,10 +215,26 @@
 <script>
 const $=s=>document.querySelector(s);
 const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-document.getElementById("themeBtn").onclick=()=>{
+
+// theme: persisted choice wins, else prefers-color-scheme default (CSS handles it)
+const themeBtn=document.getElementById("themeBtn");
+const paintThemeBtn=()=>{ themeBtn.textContent =
+  (document.documentElement.dataset.theme==="light") ? "☀" :
+  (document.documentElement.dataset.theme==="dark") ? "☾" : "◐"; };
+try{
+  const saved=localStorage.getItem("brands-console-theme");
+  if(saved==="light"||saved==="dark") document.documentElement.dataset.theme=saved;
+}catch(e){}
+paintThemeBtn();
+themeBtn.onclick=()=>{
   const r=document.documentElement;
-  r.dataset.theme = r.dataset.theme==="light" ? "dark" : "light";
+  const cur=r.dataset.theme ||
+    (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  r.dataset.theme = cur==="light" ? "dark" : "light";
+  try{ localStorage.setItem("brands-console-theme", r.dataset.theme); }catch(e){}
+  paintThemeBtn();
 };
+
 window.showBrand=function(id){
   const d=window.__data; if(!d) return;
   const b=(d.registry.brands||[]).find(x=>x.brand_id===id); if(!b) return;
@@ -151,8 +243,8 @@ window.showBrand=function(id){
     document.getElementById("brand-ODP").scrollIntoView({behavior:"smooth"}); return; }
   el.style.display="block";
   el.innerHTML=`<h3>${b.display_name} — detail</h3>
-    <pre style="font-family:var(--mono);font-size:.72rem;color:var(--dim);white-space:pre-wrap;margin-top:8px">${JSON.stringify(b,null,1).replace(/[{}"]/g,"")}</pre>
-    <p style="font-size:.76rem;color:var(--faint)">Onboarding follows the umbrella protocol — this page fills with live campaign data automatically once the brand's member loop goes live.</p>`;
+    <pre class="detail">${JSON.stringify(b,null,1).replace(/[{}"]/g,"")}</pre>
+    <p style="font-size:.76rem;color:var(--faint);margin-top:10px">Onboarding follows the umbrella protocol — this page fills with live campaign data automatically once the brand's member loop goes live.</p>`;
 };
 const IDR=n=>n==null?"—":new Intl.NumberFormat("id-ID").format(n);
 
@@ -175,10 +267,10 @@ fetch("data.json").then(r=>r.json()).then(d=>{ window.__data=d;
     }else{
       body=`<p>${esc(b.note||"queued for onboarding")}</p>`;
     }
-    return `<a href="#brand-${esc(b.brand_id)}" style="text-decoration:none;color:inherit" onclick="showBrand('${esc(b.brand_id)}')">
-      <div class="card" style="cursor:pointer"><h3>${esc(b.display_name)}
+    return `<a class="cardlink" href="#brand-${esc(b.brand_id)}" onclick="showBrand('${esc(b.brand_id)}')">
+      <div class="card"><h3>${esc(b.display_name)}
       <span class="pill ${cls}">${esc(b.status)}</span></h3>${body}
-      <p class="kv" style="color:var(--accent)">view details →</p></div></a>`;
+      <p class="cta">view details →</p></div></a>`;
   }).join("");
 
   const o=d.odp||{}, book=o.active_book||{};
@@ -215,14 +307,14 @@ fetch("data.json").then(r=>r.json()).then(d=>{ window.__data=d;
 
   $("#pillars").innerHTML = M.map(c=>`
     <div class="card"><h3 style="font-size:.85rem">${esc(c.name)}</h3>
-    <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+    <div class="pl-rows">
     ${(c.pillar||[]).map(s=>{
-      const col=s.state==="pass"?"var(--live)":s.state==="fail"?"var(--blocked)":"var(--faint)";
+      const st=s.state==="pass"?"st-pass":s.state==="fail"?"st-fail":"st-pending";
       const mark=s.state==="pass"?"✓":s.state==="fail"?"✗":"·";
-      return `<div style="display:flex;gap:8px;font-size:.72rem;font-family:var(--mono)">
-        <span style="color:${col};flex:0 0 12px">${mark}</span>
-        <span style="color:var(--text);flex:0 0 170px">${esc(s.stage.replace(/_/g," "))}</span>
-        <span style="color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(s.note)}</span></div>`;
+      return `<div class="pl-row ${st}">
+        <span class="pl-mark">${mark}</span>
+        <span class="pl-stage">${esc(s.stage.replace(/_/g," "))}</span>
+        <span class="pl-note">${esc(s.note)}</span></div>`;
     }).join("")}</div></div>`).join("");
 
   const mod=o.models||{};
@@ -232,7 +324,6 @@ fetch("data.json").then(r=>r.json()).then(d=>{ window.__data=d;
 
   const bm=o.benchmark||{};
   const series=(bm.series||[]);
-  const spark=series.map(s=>s.monthly_runrate_idr);
   $("#bench").innerHTML = `
     <div class="tile"><div class="l">North star</div><div class="v">IDR ${IDR(bm.north_star_idr_month)}</div><div class="s">nett / month (Hans 2026-07-19)</div></div>
     <div class="tile"><div class="l">Current run-rate</div><div class="v">IDR ${IDR(bm.monthly_runrate_idr)}</div><div class="s">DB-attributed paid value, trailing 30d</div></div>
@@ -248,7 +339,7 @@ fetch("data.json").then(r=>r.json()).then(d=>{ window.__data=d;
       <p>${esc((ab.arm_B_purchase_max||"").slice(0,180))}</p></div>
     <div class="card"><h3>Control + grading</h3>
       <p>${esc((ab.control||"").slice(0,120))}</p>
-      <p style="margin-top:6px">${esc((ab.grade||"").slice(0,200))}</p></div>`
+      <p style="margin-top:8px">${esc((ab.grade||"").slice(0,200))}</p></div>`
     : `<div class="card"><p class="empty">no A/B recorded</p></div>`;
 
   const gate=(reg.brands||[]).find(b=>b.brand_id==="ODP")?.decisive_human_gate;
@@ -272,7 +363,7 @@ fetch("data.json").then(r=>r.json()).then(d=>{ window.__data=d;
     return `<tr><td>${esc(x.name||x.id)}</td><td style="font-family:var(--mono);font-size:.7rem">${esc(x.stage)}</td>
     <td style="font-family:var(--mono);font-size:.68rem">${mc}</td>
     <td style="color:${vcol};font-family:var(--mono);font-size:.7rem;white-space:nowrap">${esc(x.verdict)}</td>
-    <td style="font-size:.72rem">${esc(x.verdict_why||"")}</td></tr>`;}).join("")
+    <td style="font-size:.74rem">${esc(x.verdict_why||"")}</td></tr>`;}).join("")
     :`<tr><td colspan="5" class="empty">no funnels in the factory yet</td></tr>`;
   $("#factory").innerHTML = `
     <div class="tile"><div class="l">Funnel backlog</div>
