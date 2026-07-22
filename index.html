@@ -11,7 +11,7 @@
     --text:#e9e1d3; --dim:#ab9e8b; --faint:#7d7061;
     --accent:#d08a52; --accent-strong:#e09a5e; --accent-soft:rgba(208,138,82,.14);
     --live:#6fae7d; --warn:#c9a25e; --blocked:#c07a6a; --planned:#8e8272;
-    --radius:10px;
+    --radius:12px;
     --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   }
@@ -37,57 +37,59 @@
   ::selection{background:var(--accent-soft)}
   :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 
-  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;padding:34px 0 16px;
+  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;padding:32px 0 16px;
          border-bottom:1px solid var(--line)}
-  h1{font-size:1.12rem;letter-spacing:.16em;font-weight:700}
+  h1{font-size:20px;line-height:30px;letter-spacing:0;font-weight:600}
   h1 b{color:var(--accent);font-weight:700}
-  .meta{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-left:auto;
+  .meta{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--dim);margin-left:auto;
         display:flex;align-items:center;gap:10px}
   .meta button{background:var(--panel);border:1px solid var(--line);color:var(--dim);
                border-radius:6px;font:inherit;padding:3px 10px;cursor:pointer;
                transition:border-color .2s ease,color .2s ease,background-color .25s ease}
   .meta button:hover{border-color:var(--accent);color:var(--accent)}
 
-  section{margin-top:48px}
-  h2{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
-     margin:0 0 14px;font-weight:600;display:flex;align-items:center;gap:10px;text-wrap:balance}
-  h2::before{content:"";flex:0 0 22px;height:2px;background:var(--accent);border-radius:1px}
-  .lede{font-size:.78rem;color:var(--faint);margin:-6px 0 14px;max-width:72ch}
+  section{margin-top:32px}
+  h2{font-size:16px;line-height:24px;letter-spacing:0;font-weight:500;color:var(--text);
+     margin:0 0 16px;display:flex;align-items:center;gap:10px;text-wrap:balance}
+  h2::before{content:"";flex:0 0 20px;height:2px;background:var(--accent);border-radius:1px}
+  .subh{font-size:15px;line-height:22px;font-weight:500;color:var(--text);margin:0 0 8px}
+  .subdiv{border:0;border-top:1px solid var(--line);margin:24px 0 16px}
+  .lede{font-size:14px;line-height:20px;color:var(--dim);margin:0 0 16px;max-width:72ch}
 
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-        padding:18px 20px;transition:border-color .2s ease,background-color .25s ease}
+        padding:16px 20px;transition:border-color .2s ease,background-color .25s ease}
   a.cardlink{text-decoration:none;color:inherit;display:block}
   a.cardlink .card{cursor:pointer;height:100%}
-  a.cardlink:hover .card,a.cardlink:focus-visible .card{border-color:var(--accent)}
-  .card h3{font-size:.95rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .pill{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;padding:2px 9px;
-        border-radius:999px;border:1px solid currentColor}
+  a.cardlink:hover .card,a.cardlink:focus-visible .card{border-color:var(--accent);background:var(--panel2)}
+  .card h3{font-size:15px;line-height:22px;font-weight:500;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .pill{font-family:var(--sans);font-size:12px;line-height:18px;font-weight:500;letter-spacing:.04em;
+        padding:2px 8px;border-radius:999px;border:1px solid currentColor}
   .p-live{color:var(--live)} .p-blocked{color:var(--blocked)} .p-planned{color:var(--planned)}
   .p-warn{color:var(--warn)}
-  .card p, .card li{font-size:.82rem;color:var(--dim)}
+  .card p, .card li{font-size:14px;line-height:20px;color:var(--dim)}
   .card ul{padding-left:18px;margin-top:8px}
-  .kv{font-family:var(--mono);font-size:.76rem;margin-top:8px;color:var(--dim)}
+  .kv{font-family:var(--mono);font-size:12px;line-height:18px;margin-top:8px;color:var(--dim)}
   .kv b{color:var(--text);font-weight:600}
-  .cta{font-family:var(--mono);font-size:.72rem;color:var(--accent);margin-top:12px}
+  .cta{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--accent);margin-top:12px}
 
-  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
   .tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-        padding:14px 16px;transition:border-color .2s ease,background-color .25s ease}
-  .tile .v{font-family:var(--mono);font-size:1.22rem;font-variant-numeric:tabular-nums;
+        padding:12px 16px;transition:border-color .2s ease,background-color .25s ease}
+  .tile .v{font-family:var(--mono);font-size:20px;line-height:28px;font-variant-numeric:tabular-nums;
            color:var(--text);margin-top:3px}
-  .tile .l{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-  .tile .s{font-size:.7rem;color:var(--dim);margin-top:5px}
+  .tile .l{font-size:12px;line-height:18px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  .tile .s{font-size:12px;line-height:18px;color:var(--dim);margin-top:5px}
 
-  .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);
+  .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;
            background:var(--panel);transition:border-color .2s ease,background-color .25s ease}
   table{border-collapse:collapse;width:100%;min-width:640px}
-  th,td{font-size:.78rem;text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+  th,td{font-size:14px;line-height:20px;text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
   tbody tr:last-child td{border-bottom:none}
   tbody tr:nth-child(even){background:var(--panel2)}
   tbody tr{transition:background-color .15s ease}
   tbody tr:hover{background:var(--accent-soft)}
-  th{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+  th{font-family:var(--mono);font-size:12px;line-height:18px;letter-spacing:.06em;text-transform:uppercase;
      color:var(--faint);font-weight:500;border-bottom:1px solid var(--line)}
   td{color:var(--dim)} td:first-child{color:var(--text);font-weight:500}
   th.num,td.num{text-align:right}
@@ -95,51 +97,54 @@
 
   /* pillar ladder rows */
   .pl-rows{margin-top:10px;display:flex;flex-direction:column;gap:2px}
-  .pl-row{display:flex;gap:10px;align-items:baseline;font-size:.74rem;font-family:var(--mono);
+  .pl-row{display:flex;gap:10px;align-items:baseline;font-size:12px;line-height:18px;font-family:var(--mono);
           padding:5px 0;border-bottom:1px solid var(--panel2)}
   .pl-row:last-child{border-bottom:none}
   .pl-mark{flex:0 0 14px}
   .st-pass .pl-mark{color:var(--live)} .st-fail .pl-mark{color:var(--blocked)}
   .st-pending .pl-mark{color:var(--faint)}
   .pl-stage{flex:0 0 168px;color:var(--text)}
-  .pl-note{color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-           flex:1;min-width:0}
+  .pl-note{color:var(--dim);flex:1;min-width:0}
 
   .rule{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--panel2)}
   .rule:last-child{border-bottom:none}
-  .rule .rid{font-family:var(--mono);font-size:.7rem;color:var(--text);flex:0 0 56px}
+  .rule .rid{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--text);flex:0 0 56px}
   .rule .bar{flex:0 0 96px;height:4px;background:var(--panel2);border-radius:2px;overflow:hidden}
   .rule .bar i{display:block;height:100%;background:var(--accent);border-radius:2px}
   .rule.retired .bar i{background:var(--faint)}
-  .rule .txt{font-size:.76rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;
-             white-space:nowrap;flex:1;min-width:0}
+  .rule .txt{font-size:14px;line-height:20px;color:var(--dim);flex:1;min-width:0}
   .rule.retired .rid,.rule.retired .txt{color:var(--faint);text-decoration:line-through}
 
-  .gate{border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--panel);
-        border-radius:var(--radius);padding:14px 18px;margin-top:14px;
+  /* gate: subtle warn fill when populated — vars resolve per theme, so the fill is
+     defined for the espresso default, the light media query, and the data-theme override.
+     Pure-CSS quiet collapse when the script emits only an .empty span (or nothing yet). */
+  .gate{border:1px solid var(--line);border-left:3px solid var(--warn);
+        background:color-mix(in srgb, var(--warn) 8%, var(--panel));
+        border-radius:var(--radius);padding:16px 20px;margin-top:16px;
         transition:border-color .2s ease,background-color .25s ease}
+  .gate:empty{display:none}
+  .gate:has(> .empty){padding:10px 16px;border-left-color:var(--line);background:var(--panel)}
   .gate b{color:var(--warn)}
-  .empty{color:var(--faint);font-style:italic;font-size:.8rem}
+  .empty{color:var(--dim);font-style:italic;font-size:12px;line-height:18px}
 
   .feed{padding:0}
   .feed li{margin-bottom:12px;list-style:none;padding-left:14px;position:relative}
   .feed li::before{content:"";position:absolute;left:0;top:.52em;width:5px;height:5px;
                    border-radius:50%;background:var(--accent)}
-  .feed .d{font-family:var(--mono);font-size:.68rem;color:var(--accent)}
-  .feed .t{font-size:.78rem;color:var(--dim)}
+  .feed .d{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--accent)}
+  .feed .t{font-size:14px;line-height:20px;color:var(--dim)}
 
   footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
-         font-size:.74rem;color:var(--faint);max-width:78ch}
+         font-size:12px;line-height:18px;color:var(--dim);max-width:78ch}
   a{color:var(--accent)}
-  pre.detail{font-family:var(--mono);font-size:.72rem;color:var(--dim);white-space:pre-wrap;
+  pre.detail{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--dim);white-space:pre-wrap;
              margin-top:10px;background:var(--panel2);border-radius:8px;padding:12px 14px}
 
   @media (max-width:640px){
     body{padding:0 14px 56px}
     header{padding:24px 0 12px}
-    section{margin-top:36px}
+    section{margin-top:24px}
     .pl-stage{flex:0 1 130px}
-    .pl-note{white-space:normal}
     .rule .bar{flex:0 0 64px}
     th,td{padding:8px 10px}
   }
@@ -154,32 +159,37 @@
 </header>
 
 <section>
-  <h2>Brands</h2>
-  <div class="cards" id="brands"></div>
-  <div class="card" id="brand-detail" style="display:none;margin-top:14px"></div>
+  <h2>Decision — what needs you · road to 1B/month</h2>
+  <div class="gate" id="gate"></div>
+  <div class="tiles" id="bench" style="margin-top:16px"></div>
 </section>
 
 <section>
-  <h2 id="brand-ODP">ODP — Live Campaign Results (Meta Ads, last 7d)</h2>
+  <h2>Brands — fleet</h2>
+  <div class="cards" id="brands"></div>
+  <div class="card" id="brand-detail" style="display:none;margin-top:16px"></div>
+</section>
+
+<section>
+  <h2 id="brand-ODP">ODP — live campaign results (Meta Ads, last 7d)</h2>
   <div class="tiles" id="tiles"></div>
-  <div class="tscroll" style="margin-top:14px"><table id="engines">
+  <div class="tscroll" style="margin-top:16px"><table id="engines">
     <thead><tr><th>Campaign</th><th class="num">ROAS</th><th class="num">CPC</th>
     <th class="num">CPM</th><th class="num">CTR</th><th class="num">Clicks/day</th>
     <th class="num">Spend 7d</th></tr></thead>
     <tbody></tbody></table></div>
-  <div class="gate" id="gate"></div>
-</section>
-
-<section>
-  <h2>Pillar ladder — campaign progress (video strategy, rev6 doctrine)</h2>
+  <hr class="subdiv">
+  <h3 class="subh">Pillar ladder — campaign progress (video strategy, rev6 doctrine)</h3>
   <p class="lede">24h trial → CPC-kill → first-sale/BE-ROAS → loss-kill → outlier promotion → 3-band scale → CERTIFIED (≥3 attributed orders + ROAS ≥2.0). Live pass/fail per campaign; “pending” = not enough data, never assumed.</p>
   <div class="cards" id="pillars"></div>
 </section>
 
 <section>
-  <h2>Loop drivers (LLMs) &amp; benchmark — road to 1B/month</h2>
-  <div class="tiles" id="models"></div>
-  <div class="tiles" id="bench" style="margin-top:14px"></div>
+  <h2>Funnel factory — every funnel, its stats, and the publish verdict</h2>
+  <p class="lede" id="gauntlet"></p>
+  <div class="tscroll"><table id="funnels"><thead><tr><th>Funnel</th><th>Stage</th>
+  <th>MC / stats</th><th>Verdict</th><th>Why</th></tr></thead><tbody></tbody></table></div>
+  <div class="tiles" id="factory" style="margin-top:16px"></div>
 </section>
 
 <section>
@@ -188,16 +198,13 @@
 </section>
 
 <section>
-  <h2>Rulebook (learned heuristics)</h2>
-  <div class="card" id="rules"></div>
+  <h2>Loop drivers (LLMs)</h2>
+  <div class="tiles" id="models"></div>
 </section>
 
 <section>
-  <h2>Funnel factory — every funnel, its stats, and the publish verdict</h2>
-  <p class="lede" id="gauntlet"></p>
-  <div class="tscroll"><table id="funnels"><thead><tr><th>Funnel</th><th>Stage</th>
-  <th>MC / stats</th><th>Verdict</th><th>Why</th></tr></thead><tbody></tbody></table></div>
-  <div class="tiles" id="factory" style="margin-top:14px"></div>
+  <h2>Rulebook (learned heuristics)</h2>
+  <div class="card" id="rules"></div>
 </section>
 
 <section>
