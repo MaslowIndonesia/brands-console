@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-23T17:25:27Z",
+ "generated": "2026-07-23T18:31:48Z",
  "claude": {
   "actor": "Fable 5",
   "latest": {
@@ -40,37 +40,37 @@
  "kimi": {
   "actor": "Kimi K3",
   "latest": {
-   "ts": "2026-07-23T16:16Z",
+   "ts": "2026-07-23T18:25:00Z",
    "estate": "kimi",
    "actor": "Kimi K3",
    "mode": "loop",
-   "summary": "K3 model pass via direct-API lane, real inputs inlined (CLI rc=124)",
+   "summary": "K3 pass: fleet health (kimi-loop.yml fix verified at HEAD 69089d3), 6 proposals (Omni blind-spot probe, ODP content-hash watcher, futures",
    "evidence_path": "kimi-findings/2026-07-23-kimi.md"
   },
   "recent": [
    {
-    "ts": "2026-07-23T16:16Z",
+    "ts": "2026-07-23T18:25:00Z",
     "estate": "kimi",
     "actor": "Kimi K3",
     "mode": "loop",
-    "summary": "K3 model pass via direct-API lane, real inputs inlined (CLI rc=124)",
+    "summary": "K3 pass: fleet health (kimi-loop.yml fix verified at HEAD 69089d3), 6 proposals (Omni blind-spot probe, ODP content-hash watcher, futures",
     "evidence_path": "kimi-findings/2026-07-23-kimi.md"
    },
    {
-    "ts": "2026-07-23T14:29:39Z",
+    "ts": "2026-07-23T18:24Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "K3 model pass via CLI agent lane",
+    "evidence_path": "kimi-findings/2026-07-23-kimi.md"
+   },
+   {
+    "ts": "2026-07-23T17:44:32Z",
     "estate": "kimi",
     "actor": "Kimi K3",
     "mode": "loop",
     "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
     "evidence_path": "kimi-state/last_engine.json"
-   },
-   {
-    "ts": "2026-07-23T13:15Z",
-    "estate": "kimi",
-    "actor": "Kimi K3",
-    "mode": "loop",
-    "summary": "K3 model pass via direct-API lane, real inputs inlined (CLI rc=124)",
-    "evidence_path": "kimi-findings/2026-07-23-kimi.md"
    }
   ]
  }
