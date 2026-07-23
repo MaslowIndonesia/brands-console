@@ -140,6 +140,23 @@
   pre.detail{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--dim);white-space:pre-wrap;
              margin-top:10px;background:var(--panel2);border-radius:8px;padding:12px 14px}
 
+  /* ——— 2026-07-24 Brand Revenue Loop panels (Hans directive, appended) ——— */
+  .histrow{display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid var(--panel2)}
+  .histrow:last-child{border-bottom:none}
+  .histrow .hl{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--text);flex:0 0 150px;min-width:0}
+  .histrow .hb{flex:1;height:10px;background:var(--panel2);border-radius:5px;overflow:hidden}
+  .histrow .hb i{display:block;height:100%;background:var(--accent);border-radius:5px}
+  .histrow .hv{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--dim);flex:0 0 104px;text-align:right;font-variant-numeric:tabular-nums}
+  .msgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+  .mscard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;transition:border-color .2s ease,background-color .25s ease}
+  .mscard.cur{border-color:var(--accent);background:var(--accent-soft)}
+  .mscard .mnum{font-family:var(--mono);font-size:11px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .mscard .mgoal{font-size:14px;line-height:20px;font-weight:600;color:var(--text);margin:3px 0 6px}
+  .mscard .mlev{font-size:12px;line-height:18px;color:var(--dim)}
+  .pbar{height:6px;background:var(--panel2);border-radius:3px;overflow:hidden;margin-top:10px}
+  .pbar i{display:block;height:100%;background:var(--live);border-radius:3px}
+  .tiny{font-family:var(--mono);font-size:12px;line-height:18px;color:var(--faint)}
+  .dir{font-family:var(--mono);font-size:11px;line-height:16px;color:var(--accent);letter-spacing:.03em}
   @media (max-width:640px){
     body{padding:0 14px 56px}
     header{padding:24px 0 12px}
@@ -147,6 +164,8 @@
     .pl-stage{flex:0 1 130px}
     .rule .bar{flex:0 0 64px}
     th,td{padding:8px 10px}
+    .histrow .hl{flex:0 1 104px}
+    .histrow .hv{flex:0 0 84px}
   }
 </style>
 </head>
@@ -211,6 +230,72 @@
 <section>
   <h2>Recent loop activity</h2>
   <div class="card"><ul class="feed" id="feed"></ul></div>
+</section>
+
+<!-- ——— 2026-07-24 Brand Revenue Loop upgrade (Hans directive) — appended sections; the page above is untouched ——— -->
+
+<section>
+  <h2>Dual-runner last runs — Fable 5 × Kimi K3</h2>
+  <p class="lede" id="runner-lede">Loading runner record…</p>
+  <div class="cards" id="runners"></div>
+</section>
+
+<section>
+  <h2>Ads targets — CTR ↑ · CPC ↓ · CPM ↓ · cost ↓</h2>
+  <p class="lede" id="adtargets-lede">Loading ads targets…</p>
+  <div class="tiles" id="adtargets"></div>
+  <div class="tscroll" style="margin-top:16px"><table id="adtarget-table">
+    <thead><tr><th>Campaign</th><th class="num">CTR ↑</th><th class="num">CPC ↓</th>
+    <th class="num">CPM ↓</th><th class="num">Clicks 7d</th><th class="num">Spend 7d ↓</th></tr></thead>
+    <tbody></tbody></table></div>
+</section>
+
+<section>
+  <h2>ROAS — realized, honestly computed</h2>
+  <div class="gate" id="roas-panel"></div>
+  <div class="tiles" id="roas-tiles" style="margin-top:16px"></div>
+</section>
+
+<section>
+  <h2>Traffic per day — clicks across the book</h2>
+  <p class="lede">7-day average per campaign (clicks ÷ 7) — <b>daily series not yet persisted; proposal logged</b>. An honest average, never a fabricated daily curve.</p>
+  <div class="tiles" id="traffic-tiles"></div>
+  <div class="card" style="margin-top:16px"><div id="traffic-bars"></div></div>
+</section>
+
+<section>
+  <h2>Funnel factory — survivability &amp; gauntlet record</h2>
+  <p class="lede">Every mined funnel must survive the Monte-Carlo gauntlet before any spend. A REJECT is a healthy outcome — spend not wasted is survivability earned.</p>
+  <div class="cards">
+    <div class="card"><h3>Stage histogram</h3><div id="factory-hist" style="margin-top:10px"></div>
+      <p class="tiny" id="factory-hist-note" style="margin-top:8px"></p></div>
+    <div class="card"><h3>MC gauntlet <span class="pill p-warn" id="mc-pill">…</span></h3>
+      <div class="pl-rows" id="mc-runs" style="margin-top:10px"></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Battle-tested — predicted vs actual</h2>
+  <p class="lede">Python runs the backtests (10k Monte-Carlo per funnel) and the loop scores every forecast against what actually happened. This is the ads estate's battle record.</p>
+  <div class="tiles" id="battle"></div>
+</section>
+
+<section>
+  <h2>Funnels × ads — the ever-growing combination map</h2>
+  <p class="lede" id="combos-lede">Loading combination map…</p>
+  <div class="tiles" id="combos"></div>
+  <div class="tscroll" style="margin-top:16px"><table id="combo-table">
+    <thead><tr><th>Live engine</th><th>Objective</th><th class="num">Budget /day</th>
+    <th>Destination</th><th>Efficiency axis</th></tr></thead>
+    <tbody></tbody></table></div>
+</section>
+
+<section>
+  <h2>North star — road to IDR 1B nett / month</h2>
+  <p class="lede" id="ns-lede">Loading milestones…</p>
+  <div class="tiles" id="ns-tiles"></div>
+  <div class="msgrid" id="ms-grid" style="margin-top:16px"></div>
+  <p class="tiny" id="freshness" style="margin-top:24px"></p>
 </section>
 
 <footer>
@@ -400,6 +485,207 @@ function s(x){return x&&x.latest?x.actor+': '+x.latest.summary:null}
 var c=s(d.claude),k=s(d.kimi);if(!c&&!k)return;
 e.textContent='last upgrades · '+(c||'Fable 5: —')+'  |  '+(k||'Kimi K3: —');e.hidden=false;
 }).catch(function(){e.hidden=true});})();
+</script>
+<script>
+// 2026-07-24 Brand Revenue Loop upgrade (Hans directive) — additive block; the two
+// scripts above are untouched. Renders only the appended sections, from the repo JSONs.
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var esc=function(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var IDR=function(n){return n==null?"—":new Intl.NumberFormat("id-ID").format(n)};
+var F1=function(n){return n==null?"—":new Intl.NumberFormat("id-ID",{maximumFractionDigits:1}).format(n)};
+var cut=function(s,n){s=String(s==null?"":s);return s.length>n?s.slice(0,n-1)+"…":s};
+var J=function(u,txt){return fetch(u).then(function(r){if(!r.ok)throw new Error(u);return txt?r.text():r.json()}).catch(function(){return null})};
+
+Promise.all([J("data.json"),J("metrics_snapshot.json"),J("upgrades.json"),J("benchmark_ledger.jsonl",true)]).then(function(res){
+  var d=res[0]||{}, ms=res[1], up=res[2], bl=res[3];
+  var o=d.odp||{}, reg=d.registry||{}, book=o.active_book||{};
+
+  // benchmark ledger: last JSONL row wins (book-level context for ROAS)
+  var blLast=null;
+  if(bl){bl.split("\n").forEach(function(l){l=l.trim();if(!l)return;try{blLast=JSON.parse(l)}catch(e){}});}
+
+  /* — 1 · dual-runner last runs (Fable 5 × Kimi K3) — */
+  (function(){
+    var lede="Both runners serve the "+(reg.loop_display_name||"Brand Revenue Loop")+" — it checks and fine-tunes every brand's ads with the ODP Revenue Loop Framework. Latest run + last three per runner, straight from upgrades.json";
+    if(!up){
+      $("#runner-lede").textContent=lede+" (failed to load).";
+      $("#runners").innerHTML='<div class="card"><p class="empty">upgrades.json failed to load</p></div>';
+      return;
+    }
+    $("#runner-lede").textContent=lede+" · generated "+(up.generated||"—")+".";
+    var card=function(key,fb){
+      var e=up[key];
+      if(!e)return '<div class="card"><h3>'+esc(fb)+'</h3><p class="empty">no runs recorded</p></div>';
+      var L=e.latest||{}, rec=(e.recent||[]).slice(0,3);
+      return '<div class="card"><h3>'+esc(e.actor||fb)+' <span class="pill p-live">'+esc(L.mode||"run")+'</span></h3>'
+        +'<p class="kv">latest <b>'+esc(L.ts||"—")+'</b> · estate <b>'+esc(L.estate||key)+'</b></p>'
+        +'<p style="margin-top:6px">'+esc(L.summary||"—")+'</p>'
+        +(L.evidence_path?'<p class="kv" style="margin-top:6px">evidence <b>'+esc(L.evidence_path)+'</b></p>':"")
+        +'<hr class="subdiv"><ul class="feed" style="margin-bottom:0">'
+        +(rec.length?rec.map(function(r){return '<li><span class="d">'+esc(r.ts||"")+'</span> · <b style="font-size:.76rem">'+esc(r.mode||"")+'</b><br><span class="t">'+esc(r.summary||"")+'</span></li>'}).join(""):'<li class="empty">no recent runs</li>')
+        +'</ul></div>';
+    };
+    $("#runners").innerHTML=card("claude","Fable 5")+card("kimi","Kimi K3");
+  })();
+
+  /* — shared 7d campaign metrics (metrics_snapshot.json, falling back to data.json) — */
+  var C=(ms&&ms.campaigns&&ms.campaigns.length?ms.campaigns:((o.metrics&&o.metrics.campaigns)||[]));
+  var asOf=(ms&&ms.as_of)||(o.metrics&&o.metrics.as_of)||"—";
+  var win=(ms&&ms.window)||(o.metrics&&o.metrics.window)||"last_7d";
+  var T=C.reduce(function(a,c){a.s+=c.spend||0;a.i+=c.impressions||0;a.c+=c.clicks||0;return a},{s:0,i:0,c:0});
+
+  /* — 2 · ads targets: CTR↑ CPC↓ CPM↓ cost↓ — */
+  (function(){
+    if(!C.length){ $("#adtargets-lede").textContent="no metrics snapshot yet"; return; }
+    var bctr=T.i?T.c/T.i*100:null, bcpc=T.c?T.s/T.c:null, bcpm=T.i?T.s/T.i*1000:null;
+    $("#adtargets-lede").textContent="Real 7-day numbers per campaign · window "+win+" · as of "+asOf+". Targets are directional (Hans 2026-07-24): CTR up, CPC down, CPM down, cost down — efficiency = CPC/CPM trend; week-over-week deltas render automatically once the snapshot series persists ≥2 points.";
+    $("#adtargets").innerHTML=
+      '<div class="tile"><div class="l">Spend 7d · <span class="dir">target ↓</span></div><div class="v">IDR '+IDR(T.s)+'</div><div class="s">'+C.length+' campaigns in window</div></div>'
+      +'<div class="tile"><div class="l">Blended CTR · <span class="dir">target ↑</span></div><div class="v">'+(bctr==null?"—":bctr.toFixed(2)+"%")+'</div><div class="s">'+IDR(T.c)+' clicks ÷ '+IDR(T.i)+' impressions</div></div>'
+      +'<div class="tile"><div class="l">Blended CPC · <span class="dir">target ↓</span></div><div class="v">'+(bcpc==null?"—":"IDR "+IDR(Math.round(bcpc)))+'</div><div class="s">spend ÷ clicks</div></div>'
+      +'<div class="tile"><div class="l">Blended CPM · <span class="dir">target ↓</span></div><div class="v">'+(bcpm==null?"—":"IDR "+IDR(Math.round(bcpm)))+'</div><div class="s">spend ÷ impressions ×1000</div></div>';
+    var rows=C.map(function(c){
+      return '<tr><td>'+esc(c.name)+'</td>'
+        +'<td class="num">'+(c.ctr!=null?Number(c.ctr).toFixed(2)+"%":"—")+'</td>'
+        +'<td class="num">'+IDR(c.cpc)+'</td>'
+        +'<td class="num">'+IDR(c.cpm)+'</td>'
+        +'<td class="num">'+IDR(c.clicks)+'</td>'
+        +'<td class="num">'+IDR(c.spend)+'</td></tr>';
+    }).join("");
+    rows+='<tr><td>All campaigns — blended</td>'
+      +'<td class="num">'+(bctr==null?"—":bctr.toFixed(2)+"%")+'</td>'
+      +'<td class="num">'+(bcpc==null?"—":IDR(Math.round(bcpc)))+'</td>'
+      +'<td class="num">'+(bcpm==null?"—":IDR(Math.round(bcpm)))+'</td>'
+      +'<td class="num">'+IDR(T.c)+'</td>'
+      +'<td class="num">'+IDR(T.s)+'</td></tr>';
+    $("#adtarget-table tbody").innerHTML=rows;
+  })();
+
+  /* — 3 · ROAS: honest incomputable state + book context — */
+  (function(){
+    var rl=o.realized_roas_latest, panel=$("#roas-panel");
+    if(rl&&rl.computable===false){
+      panel.innerHTML='<b>REALIZED ROAS — INCOMPUTABLE.</b> <span style="font-size:.85rem;color:var(--dim)">'+esc(rl.reason||"")
+        +'<br>window '+esc(String(rl.window_days||7))+'d · attributed orders <b style="color:var(--warn)">'+IDR(rl.attributed_orders)+'</b> · attributed revenue IDR '+IDR(rl.attributed_revenue_idr)+' · spend in window IDR '+IDR(rl.spend_idr)
+        +'<br>Needed to compute: ≥3 attributed settled orders (min-evidence lock). Until then the blind-spend cap governs and scaling stays INHIBITED — an honest zero, never a decorative number.</span>';
+    }else if(rl&&rl.realized_roas!=null){
+      panel.innerHTML='<b>REALIZED ROAS '+Number(rl.realized_roas).toFixed(2)+'×</b> <span style="font-size:.85rem;color:var(--dim)">settled revenue ÷ attributed spend · window '+esc(String(rl.window_days||7))+'d · orders '+IDR(rl.attributed_orders)+'</span>';
+    }else{
+      panel.innerHTML='<span class="empty">no realized-ROAS record yet</span>';
+    }
+    var bm=o.benchmark||{};
+    var bookRoas=blLast&&blLast.book_realized_roas!=null?blLast.book_realized_roas:(bm.series&&bm.series.length?bm.series[bm.series.length-1].book_realized_roas:null);
+    var runrate=blLast&&blLast.monthly_runrate_idr!=null?blLast.monthly_runrate_idr:bm.monthly_runrate_idr;
+    var gap=blLast&&blLast.gap_to_1B_x!=null?blLast.gap_to_1B_x:bm.gap_to_1B_x;
+    $("#roas-tiles").innerHTML=
+      '<div class="tile"><div class="l">Book realized ROAS · 30d</div><div class="v">'+(bookRoas==null?"—":Number(bookRoas).toFixed(4)+"×")+'</div><div class="s">benchmark ledger'+(blLast&&blLast.ts?" · "+esc(blLast.ts.slice(0,10)):"")+' — DB paid value ÷ spend</div></div>'
+      +'<div class="tile"><div class="l">Monthly run-rate</div><div class="v">IDR '+IDR(runrate)+'</div><div class="s">DB-attributed paid value, trailing 30d</div></div>'
+      +'<div class="tile"><div class="l">Attribution gate</div><div class="v">'+(rl&&rl.attributed_orders!=null?IDR(rl.attributed_orders)+" / 3":"—")+'</div><div class="s">orders needed to unlock ROAS + scaling</div></div>'
+      +'<div class="tile"><div class="l">Gap to 1B</div><div class="v">'+(gap!=null?IDR(gap)+"×":"—")+'</div><div class="s">shrinks only when settled orders move</div></div>';
+  })();
+
+  /* — 4 · traffic per day (derived 7d average, labeled) — */
+  (function(){
+    if(!C.length){ $("#traffic-bars").innerHTML='<p class="empty">no metrics snapshot yet</p>'; return; }
+    var rows=C.map(function(c){return{n:String(c.name||""),v:(c.clicks||0)/7}});
+    var max=rows.reduce(function(a,r){return Math.max(a,r.v)},0);
+    var tot=rows.reduce(function(a,r){return a+r.v},0);
+    var top=rows.reduce(function(a,r){return r.v>a.v?r:a},rows[0]);
+    $("#traffic-tiles").innerHTML=
+      '<div class="tile"><div class="l">Book traffic / day</div><div class="v">'+F1(tot)+'</div><div class="s">clicks/day · 7-day average, all campaigns</div></div>'
+      +'<div class="tile"><div class="l">Top engine</div><div class="v" style="font-size:.85rem">'+esc(top.n)+'</div><div class="s">'+F1(top.v)+' clicks/day average</div></div>'
+      +'<div class="tile"><div class="l">Daily series</div><div class="v" style="font-size:.85rem">not persisted</div><div class="s">proposal logged — renders when the loop stores daily rows</div></div>';
+    $("#traffic-bars").innerHTML=rows.map(function(r){
+      return '<div class="histrow"><span class="hl" title="'+esc(r.n)+'">'+esc(cut(r.n,22))+'</span>'
+        +'<span class="hb"><i style="width:'+(max>0?Math.max(2,r.v/max*100):0).toFixed(1)+'%"></i></span>'
+        +'<span class="hv">'+F1(r.v)+' /day</span></div>';
+    }).join("");
+  })();
+
+  /* — 5 · funnel factory: stage histogram + gauntlet record — */
+  var F=(o.factory&&o.factory.funnels)||[];
+  var mcs=F.filter(function(x){return x.mc});
+  (function(){
+    var f=o.factory||{};
+    if(!F.length){ $("#factory-hist").innerHTML='<p class="empty">no factory data</p>'; $("#mc-pill").textContent="no data"; return; }
+    var stages={}, order=["mined","backtested","certified","promoted","graveyard"];
+    F.forEach(function(x){var s=x.stage||"?";stages[s]=(stages[s]||0)+1});
+    var sMax=1; Object.keys(stages).forEach(function(k){sMax=Math.max(sMax,stages[k])});
+    var keys=order.filter(function(k){return stages[k]!=null}).concat(Object.keys(stages).filter(function(k){return order.indexOf(k)<0}));
+    $("#factory-hist").innerHTML=keys.map(function(k){
+      return '<div class="histrow"><span class="hl">'+esc(k)+'</span>'
+        +'<span class="hb"><i style="width="'+(stages[k]/sMax*100).toFixed(1)+'%"></i></span>'
+        +'<span class="hv">'+stages[k]+' funnel'+(stages[k]===1?"":"s")+'</span></div>';
+    }).join("");
+    $("#factory-hist-note").textContent=F.length+" funnels tracked · falsified-funnel counter (graveyard_count) = "+(f.graveyard_count!=null?f.graveyard_count:"—")+" — graveyard-stage rows are the cause-of-death log, read during mining.";
+    var rejects=mcs.filter(function(x){return x.mc.verdict==="REJECT"}).length;
+    $("#mc-pill").textContent=mcs.length+" gauntlet runs · 0 promotions yet";
+    $("#mc-runs").innerHTML=(mcs.map(function(x){
+      var m=x.mc, rej=m.verdict==="REJECT";
+      var stats=[m.p_target!=null?"p_target "+m.p_target:null,m.roas_p50!=null?"ROAS p50 "+m.roas_p50:null].filter(Boolean).join(" · ");
+      return '<div class="pl-row '+(rej?"st-fail":"st-pending")+'"><span class="pl-mark">'+(rej?"✗":"·")+'</span>'
+        +'<span class="pl-stage" style="flex:0 0 150px">'+esc(m.run||"—")+'</span>'
+        +'<span class="pl-note">'+esc(cut(x.name,46))+' — '+esc(m.verdict||"—")+(stats?' · '+esc(stats):"")+'</span></div>';
+    }).join(""))||'<p class="empty">no gauntlet runs yet</p>';
+  })();
+
+  /* — 6 · battle-tested: calibration ledger — */
+  (function(){
+    var rejects=mcs.filter(function(x){return x.mc.verdict==="REJECT"}).length;
+    $("#battle").innerHTML=
+      '<div class="tile"><div class="l">Calibration entries</div><div class="v">'+(o.calibration_entries!=null?o.calibration_entries:"—")+'</div><div class="s">predicted-vs-actual forecasts for the ads estate (Brier ledger)</div></div>'
+      +'<div class="tile"><div class="l">Python backtests</div><div class="v">'+mcs.length+'</div><div class="s">10k-run Monte-Carlo gauntlets — '+rejects+'/'+mcs.length+' REJECT, spend saved</div></div>'
+      +'<div class="tile"><div class="l">Forward tests live</div><div class="v" id="fwd-count">—</div><div class="s">funnel-routing A/B + creative-revision A/B — grading windows open</div></div>'
+      +'<div class="tile"><div class="l">Series honesty</div><div class="v" style="font-size:.85rem">count only</div><div class="s">per-entry curves live in member-loop state — the console never invents a series</div></div>';
+  })();
+
+  /* — 7 · funnels × ads: derived combination map — */
+  (function(){
+    var eng=book.live_campaigns||[];
+    var nE=eng.length, nF=F.length;
+    var fwd=(book.ab_test?1:0)+eng.filter(function(c){return /A\/B/i.test(c.dest||"")}).length;
+    var fc=$("#fwd-count"); if(fc)fc.textContent=fwd;
+    $("#combos-lede").textContent="Derived routing map, not a materialized table — every live engine can in principle route into every factory funnel, and the space grows with each factory promotion, aiming at the highest certified ROAS. Materialized today: "+fwd+" forward A/B tests (funnel arm → Bukti Nyata + Vitalitas colostrum; creative-revision arms in the ATC-opt set).";
+    $("#combos").innerHTML=
+      '<div class="tile"><div class="l">Live engines</div><div class="v">'+nE+'</div><div class="s">active book · Meta Ads</div></div>'
+      +'<div class="tile"><div class="l">Factory funnels</div><div class="v">'+nF+'</div><div class="s">mined + backtested + graveyard log</div></div>'
+      +'<div class="tile"><div class="l">Theoretical combos</div><div class="v">'+IDR(nE*nF)+'</div><div class="s">'+nE+' × '+nF+' — ever-growing with each promotion</div></div>'
+      +'<div class="tile"><div class="l">Materialized routings</div><div class="v">2</div><div class="s">funnel-arm winner ads → Bukti Nyata + Vitalitas (active book)</div></div>';
+    $("#combo-table tbody").innerHTML=(eng.map(function(c){
+      return '<tr><td>'+esc(cut(c.name,34))+'</td><td style="font-family:var(--mono);font-size:.72rem">'+esc(cut(c.objective,26))+'</td>'
+        +'<td class="num">'+IDR(c.budget_idr_day)+'</td><td style="font-size:.78rem">'+esc(cut(c.dest,52))+'</td>'
+        +'<td style="font-size:.78rem">'+esc(cut(c.success_axis,96))+'</td></tr>';
+    }).join(""))||'<tr><td colspan="5" class="empty">no live engines recorded</td></tr>';
+  })();
+
+  /* — 8 · north star milestones + freshness — */
+  (function(){
+    var rg=o.revenue_goal||{}, ns=rg.north_star||{};
+    var base=rg["baseline_ground_truth_2026-07-19"]||{};
+    var miles=rg.milestones||[];
+    $("#ns-lede").textContent=(rg.directive||"Hans 2026-07-19: aim for 1 Billion / month.")+" The loop reports against the CURRENT milestone only — it never claims north-star progress without DB-attributed paid orders.";
+    $("#ns-tiles").innerHTML=
+      '<div class="tile"><div class="l">North star</div><div class="v">IDR '+IDR(ns.nett_idr_per_month)+'</div><div class="s">nett / month (Hans 2026-07-19)</div></div>'
+      +'<div class="tile"><div class="l">Baseline · 30d DB truth</div><div class="v">'+IDR(base.paid_orders_30d)+' paid</div><div class="s">IDR '+IDR(base.paid_value_30d_idr)+' paid value · '+IDR(base.carts_30d)+' carts / IDR '+IDR(base.cart_value_30d_idr)+'</div></div>'
+      +'<div class="tile"><div class="l">First organic paid</div><div class="v" style="font-size:.85rem">2026-07-18</div><div class="s">'+esc(cut(base.first_organic_paid_since_cliff||"—",80))+'</div></div>'
+      +'<div class="tile"><div class="l">Milestones</div><div class="v">'+miles.length+'</div><div class="s">M1 → M5 · current highlighted</div></div>';
+    var paid=base.paid_orders_30d;
+    var curIdx=(paid!=null&&paid>=10)?1:0;
+    $("#ms-grid").innerHTML=miles.map(function(m,i){
+      var cur=i===curIdx;
+      var prog=(m.m===1&&paid!=null)?Math.min(100,paid/10*100):null;
+      return '<div class="mscard'+(cur?" cur":"")+'"><div class="mnum">M'+m.m+(cur?" · current":"")+'</div>'
+        +'<div class="mgoal">'+esc(m.goal)+'</div><div class="mlev">'+esc(cut(m.lever,120))+'</div>'
+        +(m.gate?'<div class="mlev" style="margin-top:6px;color:var(--warn)">gate · '+esc(cut(m.gate,90))+'</div>':"")
+        +(prog!=null?'<div class="pbar"><i style="width:'+prog.toFixed(0)+'%"></i></div><div class="tiny" style="margin-top:4px">'+paid+'/10 organic paid orders</div>':"")
+        +'</div>';
+    }).join("");
+    $("#freshness").textContent="site last-updated · data.json "+(d.generated_at||"—")+" · metrics "+asOf+" · upgrades "+((up&&up.generated)||"—")+" · benchmark ledger "+((blLast&&blLast.ts)||"—")+" · registry "+(reg.updated||"—")+" · umbrella "+(reg.umbrella||"—");
+  })();
+}).catch(function(){var f=$("#freshness");if(f)f.textContent="upgrade panels: data failed to load";});
+})();
 </script>
 </body>
 </html>
