@@ -162,6 +162,7 @@
   <h2>Decision — what needs you · road to 1B/month</h2>
   <div class="gate" id="gate"></div>
   <div class="tiles" id="bench" style="margin-top:16px"></div>
+  <div id="upg" hidden style="margin:16px 0 0;padding:8px 12px;border-radius:10px;background:var(--panel2);color:var(--dim);font:12px/18px ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-variant-numeric:tabular-nums"></div>
 </section>
 
 <section>
@@ -389,6 +390,16 @@ fetch("data.json").then(r=>r.json()).then(d=>{ window.__data=d;
     <span class="t">${esc(r.note)}</span></li>`).join("")
     || `<li class="empty">no ledger records</li>`;
 }).catch(e=>{ $("#gen").textContent="data.json failed to load"; });
+</script>
+<script>
+// upgrades strip (Hans 2026-07-23): last applied upgrade per estate, from the
+// engine-published upgrades.json — additive script; the main script above is untouched.
+(function(){var e=document.getElementById('upg');if(!e)return;
+fetch('upgrades.json').then(function(r){return r.json()}).then(function(d){
+function s(x){return x&&x.latest?x.actor+': '+x.latest.summary:null}
+var c=s(d.claude),k=s(d.kimi);if(!c&&!k)return;
+e.textContent='last upgrades · '+(c||'Fable 5: —')+'  |  '+(k||'Kimi K3: —');e.hidden=false;
+}).catch(function(){e.hidden=true});})();
 </script>
 </body>
 </html>
