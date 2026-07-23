@@ -1,0 +1,77 @@
+{
+ "generated": "2026-07-23T16:31:48Z",
+ "claude": {
+  "actor": "Fable 5",
+  "latest": {
+   "ts": "2026-07-23T15:45:00Z",
+   "estate": "claude",
+   "actor": "Fable 5",
+   "mode": "build",
+   "summary": "upgrade[trading]: top candidate 'gold_lead:2a33f9ea26' score=0.7106 -- triaged NOT a graduation (1 forward-win-date only",
+   "evidence_path": "state/build_ledger.jsonl"
+  },
+  "recent": [
+   {
+    "ts": "2026-07-23T15:45:00Z",
+    "estate": "claude",
+    "actor": "Fable 5",
+    "mode": "build",
+    "summary": "upgrade[trading]: top candidate 'gold_lead:2a33f9ea26' score=0.7106 -- triaged NOT a graduation (1 forward-win-date only",
+    "evidence_path": "state/build_ledger.jsonl"
+   },
+   {
+    "ts": "2026-07-16T23:37:41Z",
+    "estate": "claude",
+    "actor": "Fable 5",
+    "mode": "build",
+    "summary": "upgrade[trading]: gold_lead:bc21a403ba (score=0.6763) re-verified against repos/quant/improve_ledger.json (tests=1",
+    "evidence_path": "state/build_ledger.jsonl"
+   },
+   {
+    "ts": "2026-07-16",
+    "estate": "claude",
+    "actor": "Fable 5",
+    "mode": "build",
+    "summary": "MaslowIndonesia/quant-research-loop: 6 workflow failures — surfaced mid-run by Hans's concurrent engine push (commit bbe30ab); cannot",
+    "evidence_path": "state/build_ledger.jsonl"
+   }
+  ]
+ },
+ "kimi": {
+  "actor": "Kimi K3",
+  "latest": {
+   "ts": "2026-07-23T16:16Z",
+   "estate": "kimi",
+   "actor": "Kimi K3",
+   "mode": "loop",
+   "summary": "K3 model pass via direct-API lane, real inputs inlined (CLI rc=124)",
+   "evidence_path": "kimi-findings/2026-07-23-kimi.md"
+  },
+  "recent": [
+   {
+    "ts": "2026-07-23T16:16Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "K3 model pass via direct-API lane, real inputs inlined (CLI rc=124)",
+    "evidence_path": "kimi-findings/2026-07-23-kimi.md"
+   },
+   {
+    "ts": "2026-07-23T14:29:39Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
+    "evidence_path": "kimi-state/last_engine.json"
+   },
+   {
+    "ts": "2026-07-23T13:15Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "K3 model pass via direct-API lane, real inputs inlined (CLI rc=124)",
+    "evidence_path": "kimi-findings/2026-07-23-kimi.md"
+   }
+  ]
+ }
+}
