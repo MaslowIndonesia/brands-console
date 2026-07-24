@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-24T20:21:59Z",
+ "generated": "2026-07-24T22:06:57Z",
  "claude": {
   "actor": "Fable 5",
   "latest": {
@@ -40,7 +40,7 @@
  "kimi": {
   "actor": "Kimi K3",
   "latest": {
-   "ts": "2026-07-24T17:50:36Z",
+   "ts": "2026-07-24T20:40:27Z",
    "estate": "kimi",
    "actor": "Kimi K3",
    "mode": "loop",
@@ -48,6 +48,14 @@
    "evidence_path": "kimi-state/last_engine.json"
   },
   "recent": [
+   {
+    "ts": "2026-07-24T20:40:27Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
+    "evidence_path": "kimi-state/last_engine.json"
+   },
    {
     "ts": "2026-07-24T17:50:36Z",
     "estate": "kimi",
@@ -62,14 +70,6 @@
     "actor": "Kimi K3",
     "mode": "loop",
     "summary": "K3 pass 5: fleet health (IHSG site RECOVERED fresh days_behind 0 worst 0.29s after morning STALE+PERF self-resolved; quant runner CONFIRMED",
-    "evidence_path": "kimi-findings/2026-07-24-kimi.md"
-   },
-   {
-    "ts": "2026-07-24T16:09Z",
-    "estate": "kimi",
-    "actor": "Kimi K3",
-    "mode": "loop",
-    "summary": "K3 model pass via CLI agent lane",
     "evidence_path": "kimi-findings/2026-07-24-kimi.md"
    }
   ]
