@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-24T13:49:36Z",
+ "generated": "2026-07-24T15:27:55Z",
  "claude": {
   "actor": "Fable 5",
   "latest": {
@@ -40,14 +40,22 @@
  "kimi": {
   "actor": "Kimi K3",
   "latest": {
-   "ts": "2026-07-24T13:10:21Z",
+   "ts": "2026-07-24T14:10:34Z",
    "estate": "kimi",
    "actor": "Kimi K3",
    "mode": "loop",
-   "summary": "K3 pass 4: fleet health (workflows 0 new failures, kimi-loop/kimi-engine green post yaml-fix, ODP 33/33 probes green, SaaS+ads probes 200",
-   "evidence_path": "kimi-findings/2026-07-24-kimi.md"
+   "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
+   "evidence_path": "kimi-state/last_engine.json"
   },
   "recent": [
+   {
+    "ts": "2026-07-24T14:10:34Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
+    "evidence_path": "kimi-state/last_engine.json"
+   },
    {
     "ts": "2026-07-24T13:10:21Z",
     "estate": "kimi",
@@ -63,14 +71,6 @@
     "mode": "loop",
     "summary": "K3 model pass via CLI agent lane",
     "evidence_path": "kimi-findings/2026-07-24-kimi.md"
-   },
-   {
-    "ts": "2026-07-24T11:11:27Z",
-    "estate": "kimi",
-    "actor": "Kimi K3",
-    "mode": "loop",
-    "summary": "kimi-engine $0 pass: ALERT ihsg_site STALE: live as_of 2026-07-23 vs expected 2026-07-24",
-    "evidence_path": "kimi-state/last_engine.json"
    }
   ]
  }
