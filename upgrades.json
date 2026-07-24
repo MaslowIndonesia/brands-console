@@ -1,16 +1,24 @@
 {
- "generated": "2026-07-23T22:06:41Z",
+ "generated": "2026-07-24T02:50:25Z",
  "claude": {
   "actor": "Fable 5",
   "latest": {
-   "ts": "2026-07-23T15:45:00Z",
+   "ts": "2026-07-23T23:29:00Z",
    "estate": "claude",
    "actor": "Fable 5",
    "mode": "build",
-   "summary": "upgrade[trading]: top candidate 'gold_lead:2a33f9ea26' score=0.7106 -- triaged NOT a graduation (1 forward-win-date only",
+   "summary": "upgrade[trading]: gold_lead:2a33f9ea26 (score=0.7106) re-verified live against repos/quant/improve_ledger_venue.json -- tests=1",
    "evidence_path": "state/build_ledger.jsonl"
   },
   "recent": [
+   {
+    "ts": "2026-07-23T23:29:00Z",
+    "estate": "claude",
+    "actor": "Fable 5",
+    "mode": "build",
+    "summary": "upgrade[trading]: gold_lead:2a33f9ea26 (score=0.7106) re-verified live against repos/quant/improve_ledger_venue.json -- tests=1",
+    "evidence_path": "state/build_ledger.jsonl"
+   },
    {
     "ts": "2026-07-23T15:45:00Z",
     "estate": "claude",
@@ -26,21 +34,13 @@
     "mode": "build",
     "summary": "upgrade[trading]: gold_lead:bc21a403ba (score=0.6763) re-verified against repos/quant/improve_ledger.json (tests=1",
     "evidence_path": "state/build_ledger.jsonl"
-   },
-   {
-    "ts": "2026-07-16",
-    "estate": "claude",
-    "actor": "Fable 5",
-    "mode": "build",
-    "summary": "MaslowIndonesia/quant-research-loop: 6 workflow failures — surfaced mid-run by Hans's concurrent engine push (commit bbe30ab); cannot",
-    "evidence_path": "state/build_ledger.jsonl"
    }
   ]
  },
  "kimi": {
   "actor": "Kimi K3",
   "latest": {
-   "ts": "2026-07-23T20:19:48Z",
+   "ts": "2026-07-23T22:13:54Z",
    "estate": "kimi",
    "actor": "Kimi K3",
    "mode": "loop",
@@ -48,6 +48,14 @@
    "evidence_path": "kimi-state/last_engine.json"
   },
   "recent": [
+   {
+    "ts": "2026-07-23T22:13:54Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
+    "evidence_path": "kimi-state/last_engine.json"
+   },
    {
     "ts": "2026-07-23T20:19:48Z",
     "estate": "kimi",
@@ -62,14 +70,6 @@
     "actor": "Kimi K3",
     "mode": "loop",
     "summary": "K3 pass: fleet health (kimi-loop.yml fix verified at HEAD 69089d3), 6 proposals (Omni blind-spot probe, ODP content-hash watcher, futures",
-    "evidence_path": "kimi-findings/2026-07-23-kimi.md"
-   },
-   {
-    "ts": "2026-07-23T18:24Z",
-    "estate": "kimi",
-    "actor": "Kimi K3",
-    "mode": "loop",
-    "summary": "K3 model pass via CLI agent lane",
     "evidence_path": "kimi-findings/2026-07-23-kimi.md"
    }
   ]
