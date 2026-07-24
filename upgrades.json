@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-24T04:55:27Z",
+ "generated": "2026-07-24T07:33:45Z",
  "claude": {
   "actor": "Fable 5",
   "latest": {
@@ -40,32 +40,32 @@
  "kimi": {
   "actor": "Kimi K3",
   "latest": {
-   "ts": "2026-07-24T03:41:41Z",
+   "ts": "2026-07-24T05:44:38Z",
    "estate": "kimi",
    "actor": "Kimi K3",
    "mode": "loop",
-   "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
-   "evidence_path": "kimi-state/last_engine.json"
+   "summary": "K3 pass: fleet health (kimi-loop green 6/6, LOOPS_PAT evidence flipped to unset, futures forward ledger stalled 3 weekdays, sovereign site",
+   "evidence_path": "kimi-findings/2026-07-24-kimi.md"
   },
   "recent": [
    {
+    "ts": "2026-07-24T05:44:38Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "K3 pass: fleet health (kimi-loop green 6/6, LOOPS_PAT evidence flipped to unset, futures forward ledger stalled 3 weekdays, sovereign site",
+    "evidence_path": "kimi-findings/2026-07-24-kimi.md"
+   },
+   {
+    "ts": "2026-07-24T05:38Z",
+    "estate": "kimi",
+    "actor": "Kimi K3",
+    "mode": "loop",
+    "summary": "K3 model pass via direct-API lane, real inputs inlined (CLI rc=124)",
+    "evidence_path": "kimi-findings/2026-07-24-kimi.md"
+   },
+   {
     "ts": "2026-07-24T03:41:41Z",
-    "estate": "kimi",
-    "actor": "Kimi K3",
-    "mode": "loop",
-    "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
-    "evidence_path": "kimi-state/last_engine.json"
-   },
-   {
-    "ts": "2026-07-23T22:13:54Z",
-    "estate": "kimi",
-    "actor": "Kimi K3",
-    "mode": "loop",
-    "summary": "kimi-engine $0 pass: health snapshot + lock watchdog + ihsg freshness ok",
-    "evidence_path": "kimi-state/last_engine.json"
-   },
-   {
-    "ts": "2026-07-23T20:19:48Z",
     "estate": "kimi",
     "actor": "Kimi K3",
     "mode": "loop",
