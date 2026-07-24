@@ -1,0 +1,64 @@
+{
+ "stats": {
+  "total_concepts": 8,
+  "by_status": {
+   "PASS": 6,
+   "UNVERIFIABLE": 2
+  },
+  "by_domain": {
+   "mathematics": 4,
+   "probability": 2,
+   "quantum": 1,
+   "sector": 1
+  },
+  "forward_tests": 0,
+  "forward_graded": 0,
+  "forward_accuracy": null,
+  "graduation_candidates": 6,
+  "generated_at": "2026-07-24T06:57:24+00:00"
+ },
+ "candidates": [
+  {
+   "id": "mathematics_92246358",
+   "domain": "mathematics",
+   "claim": "Sum of first n integers is n(n+1)/2 (Gauss).",
+   "evidence": "identity sum_1_to_n held over 60 random n\u2208[1,500]",
+   "forward_graded": null
+  },
+  {
+   "id": "mathematics_79144584",
+   "domain": "mathematics",
+   "claim": "Sum of first n squares is n(n+1)(2n+1)/6.",
+   "evidence": "identity sum_squares held over 40 random n\u2208[1,500]",
+   "forward_graded": null
+  },
+  {
+   "id": "mathematics_75779622",
+   "domain": "mathematics",
+   "claim": "Sum of first n cubes equals the square of the sum of first n integers.",
+   "evidence": "identity sum_cubes_eq_sq_of_sum held over 40 random n\u2208[1,500]",
+   "forward_graded": null
+  },
+  {
+   "id": "probability_97820258",
+   "domain": "probability",
+   "claim": "Sample mean of a fair die converges to 3.5 (LLN).",
+   "evidence": "MC die_expectation: est=3.4995 vs 3.5 (tol 0.02, N=300000)",
+   "forward_graded": null
+  },
+  {
+   "id": "probability_42969008",
+   "domain": "probability",
+   "claim": "Uniform(0,1) sample mean converges to 0.5.",
+   "evidence": "MC uniform_mean: est=0.5002 vs 0.5 (tol 0.01, N=300000)",
+   "forward_graded": null
+  },
+  {
+   "id": "mathematics_65391740",
+   "domain": "mathematics",
+   "claim": "Arithmetic mean \u2265 geometric mean for positive reals (AM-GM).",
+   "evidence": "AM\u2265GM held on 800/800 samples",
+   "forward_graded": null
+  }
+ ]
+}
